@@ -1,0 +1,289 @@
+/* --- Google Font Import & General Body Styling --- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Auth Page (index.html) --- */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+}
+
+.form-section {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+  color: #1e3a8a;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.form-section input,
+.form-section select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-section input:hover,
+.form-section select:hover {
+  border-color: #3b82f6;
+}
+
+.form-section input:focus,
+.form-section select:focus {
+  outline: none;
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #1e3a8a;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2563eb;
+}
+
+.form-section a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.form-section a:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#message {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* --- Rooms Page (rooms.html) --- */
+.header {
+  background: #1e3a8a;
+  color: white;
+  padding: 15px 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.logout-button {
+  background: #ef4444;
+  width: auto;
+  padding: 10px 20px;
+  font-size: 15px;
+}
+
+.logout-button:hover {
+  background: #dc2626;
+}
+
+.selection-controls {
+  box-sizing: border-box;
+  width: 60%;
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.selection-controls select,
+.selection-controls button {
+  box-sizing: border-box;
+  width: 80%;
+  max-width: 400px;
+  padding: 16px;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.selection-controls select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em;
+  padding-right: 2.5rem;
+}
+
+.selection-controls select:hover,
+.selection-controls button:hover {
+  border-color: #3b82f6;
+}
+
+.selection-controls select:focus {
+  outline: none;
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
+.view-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 30px 30px 30px;
+}
+
+/* --- Room Box Styling --- */
+.room-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.room-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.room-box h3 {
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin: -20px -20px 20px -20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* --- Bed SVG Layout Styling --- */
+.beds-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+  padding: 20px;
+}
+
+.bed-item {
+  text-align: center;
+  position: relative;
+  width: 200px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.bed-svg {
+  width: 100%;
+  height: 100px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.bed-number-label {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #555;
+  margin: 0;
+  padding: 0;
+}
+
+.bed-base {
+  fill: #ecf0f1;
+  stroke: #bdc3c7;
+  stroke-width: 2px;
+}
+
+.bed-pillow {
+  fill: #ffffff;
+  stroke: #ccc;
+  stroke-width: 1px;
+}
+
+.bed-mattress {
+  fill: #fcfcfc;
+  stroke: #e0e0e0;
+  stroke-width: 1px;
+}
+
+.bed-svg.available .bed-base {
+  fill: #2ecc71;
+  stroke: #27ae60;
+}
+
+.bed-svg.window-side .bed-base {
+  fill: #f39c12;
+  stroke: #e67e22;
+}
+
+.bed-svg.occupied .bed-base {
+  fill: #bdc3c7;
+  stroke: #95a5a6;
+  cursor: not-allowed;
+}
+
+.bed-svg:not(.occupied):hover {
+  transform: translateY(-5px) scale(1.02);
+  filter: brightness(1.05);
+}
+
+.bed-svg:not(.occupied):hover .bed-base {
+  filter: brightness(0.9);
+}

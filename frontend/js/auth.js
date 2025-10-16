@@ -1,0 +1,93 @@
+const baseUrl = "http://localhost:5000";
+
+document.addEventListener('DOMContentLoaded', () => {
+  const signupRole = document.getElementById('signup-role');
+  if (signupRole) {
+    signupRole.addEventListener('change', handleRoleChange);
+  }
+});
+
+function handleRoleChange() {
+  const role = document.getElementById('signup-role').value;
+  const studentFields = document.getElementById('student-fields');
+  const adminFields = document.getElementById('admin-fields');
+
+  if (role === 'student') {
+    studentFields.classList.remove('hidden');
+    adminFields.classList.add('hidden');
+  } else {
+    studentFields.classList.add('hidden');
+    adminFields.classList.remove('hidden');
+  }
+}
+
+function toggleForm() {
+  document.getElementById("login-section").classList.toggle("hidden");
+  document.getElementById("signup-section").classList.toggle("hidden");
+  document.getElementById("message").innerText = "";
+  handleRoleChange(); // Ensure correct fields are shown on toggle
+}
+
+async function signup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const admissionNo = document.getElementById('signup-id').value.trim();
+  const role = document.getElementById('signup-role').value;
+  const password = document.getElementById('signup-password').value.trim();
+  const confirm = document.getElementById('signup-confirm').value.trim();
+  
+  const userData = { name, admissionNo, role, password };
+
+  if (role === 'student') {
+    userData.semester = document.getElementById('signup-semester').value.trim();
+  } else {
+    userData.post = document.getElementById('signup-post').value.trim();
+  }
+
+  if (password !== confirm) return showMessage("Passwords do not match!");
+
+  try {
+    const res = await fetch(`${baseUrl}/api/users/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Registration failed");
+    
+    showMessage('Registration successful! Please log in.', 'success');
+    toggleForm();
+  } catch (error) {
+    showMessage(error.message);
+  }
+}
+
+async function login() {
+  const admissionNo = document.getElementById('login-id').value.trim();
+  const role = document.getElementById('login-role').value;
+  const password = document.getElementById('login-password').value.trim();
+
+  try {
+    const res = await fetch(`${baseUrl}/api/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admissionNo, role, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
+
+    // For now, both redirect to rooms. Later you can add an admin dashboard.
+    window.location.href = 'rooms.html';
+
+  } catch (error) {
+    showMessage(error.message);
+  }
+}
+
+function showMessage(msg, type = 'error') {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = msg;
+  messageEl.style.color = type === 'success' ? '#2ecc71' : '#e74c3c';
+}

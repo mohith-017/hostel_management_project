@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <title>Your Page Title</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Hostel Room Availability</h1>
+    <button id="logout-btn" class="logout-button">Logout</button>
+  </header>
+
+  <div class="selection-controls">
+    <select id="block-select">
+      <option value="">-- Select Block --</option>
+      <option value="A">Block A</option>
+      <option value="B">Block B</option>
+      <option value="C">Block C</option>
+    </select>
+    <select id="floor-select">
+      <option value="">-- Select Floor --</option>
+      <option value="1">Floor 1</option>
+      <option value="2">Floor 2</option>
+      <option value="3">Floor 3</option>
+      <option value="4">Floor 4</option>
+    </select>
+    <button id="find-rooms-btn">Find Rooms</button>
+  </div>
+
+  <div id="view-container" class="view-container">
+    </div>
+
+  <script src="js/rooms.js"></script>
+</body>
+</html>
