@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1 id="welcome-message">Welcome, Student!</h1>
+    <button id="logout-btn" class="logout-button">Logout</button>
+  </header>
+
+  <main class="dashboard-container">
+    <div class="dashboard-grid">
+      
+      <a href="rooms.html" class="dashboard-card">
+        <h3>Book/View Room</h3>
+        <p>Check room availability and book your bed.</p>
+      </a>
+
+      <a href="fees.html" class="dashboard-card">
+        <h3>Pay Fees</h3>
+        <p>Check your fee status and pay outstanding dues.</p>
+      </a>
+
+      <a href="complaints.html" class="dashboard-card">
+        <h3>Lodge Complaint</h3>
+        <p>Submit a complaint about hostel facilities.</p>
+      </a>
+
+    </div>
+
+    <div class="info-section">
+      <h2>Hostel Information</h2>
+      
+      <div class="info-card">
+        <h3>Contact Details</h3>
+        <p><strong>Chief Warden:</strong> Dr. A. K. Singh</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> warden@sjbit.edu.in</p>
+        <p><strong>Office:</strong> Block A, Ground Floor</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Hostel Gallery</h3>
+        <div class="gallery">
+          <img src="images/hostel1.jpg" alt="Hostel Room">
+          <img src="images/hostel2.jpg" alt="Hostel Mess">
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

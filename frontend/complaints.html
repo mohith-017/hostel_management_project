@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Complaint Box</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1>Complaint Box</h1>
+    <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+  </header>
+
+  <main class="container-small">
+    
+    <div id="complaint-form-box">
+      <h2>Submit a New Complaint</h2>
+      <select id="complaint-category">
+        <option value="">-- Select Category --</option>
+        <option value="Electrical">Electrical</option>
+        <option value="Plumbing">Plumbing</option>
+        <option value="Mess">Mess</option>
+        <option value="Wi-Fi">Wi-Fi</option>
+        <option value="Other">Other</option>
+      </select>
+      <textarea id="complaint-desc" rows="5" placeholder="Describe your issue..."></textarea>
+      <button id="submit-complaint-btn">Submit Complaint</button>
+      <p id="complaint-api-message"></p>
+    </div>
+
+    <div id="past-complaints-box">
+      <h2>Your Past Complaints</h2>
+      <div id="complaints-list">
+        <p>Loading your complaints...</p>
+      </div>
+    </div>
+    
+  </main>
+
+  <script src="js/complaints.js"></script>
+</body>
+</html>

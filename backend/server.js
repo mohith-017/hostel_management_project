@@ -4,8 +4,10 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import roomRoutes from "./routes/roomRoutes.js";
+import feeRoutes from "./routes/feeRoutes.js";            
+import complaintRoutes from "./routes/complaintRoutes.js"; 
+import adminRoutes from "./routes/adminRoutes.js";
 
-// Load environment variables
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -26,6 +28,11 @@ connectDB();
 // API Routes
 app.use("/api/users", userRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/fees", feeRoutes);             // (NEW)
+app.use("/api/complaints", complaintRoutes);
+
+
+app.use("/api/admin", adminRoutes);// (NEW)
 
 app.get("/", (req, res) => {
   res.send("SJBIT Hostel Backend is Running 🚀");

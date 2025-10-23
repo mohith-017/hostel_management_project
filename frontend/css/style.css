@@ -32,7 +32,8 @@ body {
 }
 
 .form-section input,
-.form-section select {
+.form-section select,
+textarea {
   box-sizing: border-box;
   width: 100%;
   padding: 14px;
@@ -45,12 +46,14 @@ body {
 }
 
 .form-section input:hover,
-.form-section select:hover {
+.form-section select:hover,
+textarea:hover {
   border-color: #3b82f6;
 }
 
 .form-section input:focus,
-.form-section select:focus {
+.form-section select:focus,
+textarea:focus {
   outline: none;
   border-color: #1e3a8a;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
@@ -74,6 +77,11 @@ button:hover {
   background-color: #2563eb;
 }
 
+button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
 .form-section a {
   color: #2563eb;
   text-decoration: none;
@@ -94,7 +102,7 @@ button:hover {
   font-weight: 600;
 }
 
-/* --- Rooms Page (rooms.html) --- */
+/* --- Global Header --- */
 .header {
   background: #1e3a8a;
   color: white;
@@ -116,12 +124,30 @@ button:hover {
   width: auto;
   padding: 10px 20px;
   font-size: 15px;
+  margin-top: 0;
 }
 
 .logout-button:hover {
   background: #dc2626;
 }
 
+.back-button {
+  background: #60a5fa;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background: #3b82f6;
+}
+
+
+/* --- Rooms Page (rooms.html) --- */
 .selection-controls {
   box-sizing: border-box;
   width: 60%;
@@ -179,20 +205,22 @@ button:hover {
   justify-content: center;
   gap: 20px;
   padding: 0 30px 30px 30px;
+  width: 60vw;
+  margin-left: 215px;
 }
 
-/* --- Room Box Styling --- */
 .room-box {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   padding: 20px;
-  width: 200px;
+  width: 175px;
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid #e5e7eb;
 }
+
 
 .room-box:hover {
   transform: translateY(-5px);
@@ -209,7 +237,6 @@ button:hover {
   font-weight: 600;
 }
 
-/* --- Bed SVG Layout Styling --- */
 .beds-layout {
   display: flex;
   flex-wrap: wrap;
@@ -286,4 +313,224 @@ button:hover {
 
 .bed-svg:not(.occupied):hover .bed-base {
   filter: brightness(0.9);
+}
+
+/* --- (NEW) Dashboard Page --- */
+.dashboard-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h3 {
+  color: #1e3a8a;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.dashboard-card p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.info-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+.info-section h2 {
+  color: #1e3a8a;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 10px;
+}
+
+.info-card {
+  margin-bottom: 20px;
+}
+
+.info-card h3 {
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  margin: 5px 0;
+  line-height: 1.7;
+}
+
+.gallery {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.gallery img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- (NEW) Small Container for Fees & Complaints --- */
+.container-small {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+#fee-status-box,
+#complaint-form-box,
+#past-complaints-box {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  margin-bottom: 30px;
+}
+
+#fee-status-box h2,
+#complaint-form-box h2,
+#past-complaints-box h2 {
+  color: #1e3a8a;
+  margin-top: 0;
+}
+
+#fee-details p {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+#fee-details span {
+  font-weight: 600;
+}
+
+#api-message,
+#complaint-api-message {
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+/* --- (NEW) Complaint List Styling --- */
+.complaint-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #f9fafb;
+}
+
+.complaint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.complaint-header strong {
+  color: #1e3a8a;
+}
+
+.complaint-item p {
+  margin: 5px 0;
+  color: #333;
+}
+
+.complaint-item small {
+  color: #777;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.status-submitted {
+  background-color: #f39c12;
+}
+
+.status-in-progress {
+  background-color: #3b82f6;
+}
+
+.status-resolved {
+  background-color: #2ecc71;
+}
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.toast {
+  background-color: #333;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.toast-success {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.toast.toast-error {
+  background-color: #e74c3c;
+  color: white;
+}
+
+
+#signup-section {
+  max-height: 80vh;
+  overflow-y: auto;
 }

@@ -9,9 +9,18 @@ const userSchema = new mongoose.Schema({
     enum: ["student", "admin"],
     required: true,
   },
-  semester: { type: String }, // Only for students
-  post: { type: String },     // Only for admins
   password: { type: String, required: true },
+
+  // --- (NEW) Student-Specific Fields ---
+  semester: { type: String }, // (Already existed)
+  studentPhone: { type: String },
+  parentName: { type: String },
+  parentPhone: { type: String },
+  address: { type: String },
+
+  // --- (NEW) Admin-Specific Field ---
+  post: { type: String },     // (Already existed)
+
 }, { timestamps: true });
 
 // Hash password before saving

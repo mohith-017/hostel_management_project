@@ -78,8 +78,14 @@ async function login() {
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
 
-    // For now, both redirect to rooms. Later you can add an admin dashboard.
-    window.location.href = 'rooms.html';
+    // --- (UPDATED) ---
+    // Redirect based on role
+    if (data.user.role === 'student') {
+      window.location.href = 'dashboard.html';
+    } else {
+      window.location.href = 'rooms.html'; // Admin can still see the rooms for now
+    }
+    // --- (END OF UPDATE) ---
 
   } catch (error) {
     showMessage(error.message);
@@ -90,4 +96,73 @@ function showMessage(msg, type = 'error') {
   const messageEl = document.getElementById('message');
   messageEl.textContent = msg;
   messageEl.style.color = type === 'success' ? '#2ecc71' : '#e74c3c';
+}
+
+// ... (keep handleRoleChange, toggleForm, and showMessage) ...
+
+async function signup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const admissionNo = document.getElementById('signup-id').value.trim();
+  const role = document.getElementById('signup-role').value;
+  const password = document.getElementById('signup-password').value.trim();
+  const confirm = document.getElementById('signup-confirm').value.trim();
+  
+  // (UPDATED) Get all new fields
+  const userData = { name, admissionNo, role, password };
+
+  if (role === 'student') {
+    userData.semester = document.getElementById('signup-semester').value.trim();
+    userData.studentPhone = document.getElementById('signup-student-phone').value.trim();
+    userData.parentName = document.getElementById('signup-parent-name').value.trim();
+    userData.parentPhone = document.getElementById('signup-parent-phone').value.trim();
+    userData.address = document.getElementById('signup-address').value.trim();
+  } else {
+    userData.post = document.getElementById('signup-post').value.trim();
+  }
+
+  if (password !== confirm) return showMessage("Passwords do not match!");
+
+  try {
+    const res = await fetch(`${baseUrl}/api/users/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData), // (Body now includes all new data)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Registration failed");
+    
+    showMessage('Registration successful! Please log in.', 'success');
+    toggleForm();
+  } catch (error) {
+    showMessage(error.message);
+  }
+}
+
+async function login() {
+  const admissionNo = document.getElementById('login-id').value.trim();
+  const role = document.getElementById('login-role').value;
+  const password = document.getElementById('login-password').value.trim();
+
+  try {
+    const res = await fetch(`${baseUrl}/api/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admissionNo, role, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
+
+    // (UPDATED) Redirect admin to new dashboard
+    if (data.user.role === 'student') {
+      window.location.href = 'dashboard.html';
+    } else {
+      window.location.href = 'admin-dashboard.html'; // (NEW)
+    }
+
+  } catch (error) {
+    showMessage(error.message);
+  }
 }

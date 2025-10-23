@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Fee Payment</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1>Fee Payment</h1>
+    <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+  </header>
+
+  <main class="container-small">
+    <div id="fee-status-box">
+      <h2>Your Fee Status</h2>
+      <p id="fee-message">Loading fee details...</p>
+      
+      <div id="fee-details" class="hidden">
+        <p><strong>Amount:</strong> <span id="fee-amount"></span></p>
+        <p><strong>Status:</strong> <span id="fee-status"></span></p>
+        <p id="payment-date"></p>
+        
+        <button id="pay-button">Pay Now (Simulated)</button>
+      </div>
+      
+      <p id="api-message"></p>
+    </div>
+  </main>
+
+  <script src="js/fees.js"></script>
+</body>
+</html>

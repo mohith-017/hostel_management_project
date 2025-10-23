@@ -9,7 +9,12 @@ const generateToken = (id) => {
 // @route   POST /api/users/register
 export const registerUser = async (req, res) => {
   try {
-    const { name, admissionNo, role, semester, post, password } = req.body;
+    // (UPDATED) Destructure all new fields
+    const { 
+      name, admissionNo, role, password,
+      semester, studentPhone, parentName, parentPhone, address, // Student fields
+      post // Admin fields
+    } = req.body;
 
     if (!name || !admissionNo || !role || !password) {
       return res.status(400).json({ error: "Please fill all required fields." });
@@ -20,9 +25,18 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ error: "User with this ID already exists!" });
     }
 
+    // (UPDATED) Add all new fields to the user data object
     const userData = { name, admissionNo, role, password };
-    if (role === 'student') userData.semester = semester;
-    if (role === 'admin') userData.post = post;
+    if (role === 'student') {
+      userData.semester = semester;
+      userData.studentPhone = studentPhone;
+      userData.parentName = parentName;
+      userData.parentPhone = parentPhone;
+      userData.address = address;
+    }
+    if (role === 'admin') {
+      userData.post = post;
+    }
 
     const user = await User.create(userData);
 
@@ -48,7 +62,7 @@ export const loginUser = async (req, res) => {
       res.json({
         message: "Login successful!",
         token: generateToken(user._id),
-        user: { name: user.name, role: user.role },
+        user: { name: user.name, role: user.role, id: user._id }, // (Updated to send ID)
       });
     } else {
       res.status(401).json({ error: "Invalid credentials or role." });

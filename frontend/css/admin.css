@@ -1,0 +1,190 @@
+/* --- Admin Dashboard Styling --- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  margin: 0;
+}
+
+.admin-header {
+  background: #2c3e50;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.admin-header nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.nav-link:hover {
+  color: #3498db;
+}
+
+.logout-button {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.3s;
+}
+.logout-button:hover {
+  background: #c0392b;
+}
+
+.admin-container {
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #ccc;
+}
+.stat-card h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #555;
+}
+.stat-card p {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+.stat-card.complaints { border-color: #f39c12; }
+.stat-card.fees { border-color: #e74c3c; }
+.stat-card.students { border-color: #3498db; }
+
+/* Data Tables */
+.data-section {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+.data-section h2 {
+  margin-top: 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  color: #2c3e50;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+th {
+  background-color: #f4f7f6;
+  font-weight: 700;
+  color: #333;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Status & Actions */
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+}
+.status-submitted { background-color: #f39c12; }
+.status-in-progress { background-color: #3498db; }
+.status-resolved { background-color: #2ecc71; }
+
+.action-select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+/* --- (NEW) Action Button Styles --- */
+.action-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+/* This is the red-ish button you wanted */
+.btn-progress {
+  background-color: #f39c12; /* Orange/Yellow */
+}
+.btn-progress:hover {
+  background-color: #e67e22;
+}
+
+.btn-resolve {
+  background-color: #2ecc71; /* Green */
+}
+.btn-resolve:hover {
+  background-color: #27ae60;
+}
+
+.btn-disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
