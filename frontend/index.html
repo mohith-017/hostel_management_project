@@ -1,183 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- <link rel="stylesheet" href="css/style.css" /> -->
-  <!-- <link rel="stylesheet" href="css/admin.css" />  -->
-  <title>SJBIT Hostel Portel</title>
-</head>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SJBIT Hostel Portal</title>
+    <link rel="stylesheet" href="css/style.css" /> </head>
 <body>
-  <section class="hero is-primary is-fullheight">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-5-tablet is-4-desktop is-4-widescreen">
-
-            <div id="login-section" class="box">
-              <h2 class="title is-4 has-text-centered">Hostel Login</h2>
-
-              <div class="field">
-                <label class="label" for="login-id">User ID</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="text" id="login-id" placeholder="e.g., Admission No.">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label" for="login-role">Login As</label>
-                <div class="control has-icons-left">
-                  <div class="select is-fullwidth">
-                    <select id="login-role">
-                      <option value="student">Student</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-users-cog"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label" for="login-password">Password</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="password" id="login-password" placeholder="*******">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <button class="button is-primary is-fullwidth" onclick="login()">Login</button>
-              </div>
-
-              <p class="has-text-centered">New here? <a href="#" onclick="toggleForm()">Create an Account</a></p>
+    <div class="login-page-wrapper"> <div id="auth-box" class="auth-box frost-container"> <div id="login-section" class="form-section">
+                <h2>Hostel Login</h2>
+                <input type="text" id="login-id" placeholder="User ID (e.g., Admission No.)" />
+                <select id="login-role">
+                    <option value="student">Login as Student</option>
+                    <option value="admin">Login as Admin</option>
+                </select>
+                <input type="password" id="login-password" placeholder="Password" />
+                <button onclick="login()">Login</button>
+                <p>New here? <a href="#" onclick="toggleForm()">Create an Account</a></p>
             </div>
 
-            <div id="signup-section" class="box is-hidden">
-              <h2 class="title is-4 has-text-centered">Create Account</h2>
-
-              <div class="field">
-                <label class="label" for="signup-name">Full Name</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="text" id="signup-name" placeholder="Your Full Name">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-id-card"></i>
-                  </span>
+            <div id="signup-section" class="form-section hidden"> <h2>Create Account</h2>
+                <input type="text" id="signup-name" placeholder="Full Name" />
+                <input type="text" id="signup-id" placeholder="User ID (e.g., Admission No.)" />
+                <select id="signup-role" onchange="handleRoleChange()"> <option value="student">I am a Student</option>
+                    <option value="admin">I am an Admin</option>
+                </select>
+                <div id="student-fields">
+                    <input type="text" id="signup-semester" placeholder="Semester (e.g., 5th)" />
+                    <input type="text" id="signup-student-phone" placeholder="Your Phone Number" />
+                    <input type="text" id="signup-parent-name" placeholder="Parent's Name" />
+                    <input type="text" id="signup-parent-phone" placeholder="Parent's Phone Number" />
+                    <input type="text" id="signup-address" placeholder="Home Address" />
                 </div>
-              </div>
-
-              <div class="field">
-                <label class="label" for="signup-id">User ID</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="text" id="signup-id" placeholder="e.g., Admission No.">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
+                <div id="admin-fields" class="hidden"> <input type="text" id="signup-post" placeholder="Admin Post (e.g., Warden)" />
                 </div>
-              </div>
-
-              <div class="field">
-                <label class="label" for="signup-role">I am a</label>
-                <div class="control has-icons-left">
-                  <div class="select is-fullwidth">
-                    <select id="signup-role">
-                      <option value="student">Student</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-users-cog"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div id="student-fields">
-                <div class="field">
-                  <label class="label" for="signup-semester">Semester</label>
-                  <div class="control"> <input class="input" type="text" id="signup-semester" placeholder="e.g., 5th">
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label" for="signup-student-phone">Your Phone</label>
-                  <div class="control"> <input class="input" type="text" id="signup-student-phone"
-                      placeholder="Your Phone Number"></div>
-                </div>
-                <div class="field">
-                  <label class="label" for="signup-parent-name">Parent's Name</label>
-                  <div class="control"> <input class="input" type="text" id="signup-parent-name"
-                      placeholder="Parent's Name"></div>
-                </div>
-                <div class="field">
-                  <label class="label" for="signup-parent-phone">Parent's Phone</label>
-                  <div class="control"> <input class="input" type="text" id="signup-parent-phone"
-                      placeholder="Parent's Phone Number"></div>
-                </div>
-                <div class="field">
-                  <label class="label" for="signup-address">Address</label>
-                  <div class="control"> <input class="input" type="text" id="signup-address" placeholder="Home Address">
-                  </div>
-                </div>
-              </div>
-
-              <div id="admin-fields" class="is-hidden">
-                <div class="field">
-                  <label class="label" for="signup-post">Admin Post</label>
-                  <div class="control"> <input class="input" type="text" id="signup-post" placeholder="e.g., Warden">
-                  </div>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label" for="signup-password">Create Password</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="password" id="signup-password" placeholder="*******">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="label" for="signup-confirm">Confirm Password</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="password" id="signup-confirm" placeholder="*******">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-check-circle"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <button class="button is-success is-fullwidth" onclick="signup()">Register</button>
-              </div>
-
-              <p class="has-text-centered">Already a member? <a href="#" onclick="toggleForm()">Login Instead</a></p>
+                <input type="password" id="signup-password" placeholder="Create Password" />
+                <input type="password" id="signup-confirm" placeholder="Confirm Password" />
+                <button onclick="signup()">Register</button>
+                <p>Already a member? <a href="#" onclick="toggleForm()">Login Instead</a></p>
             </div>
 
-            <div id="message" class="notification mt-4"></div>
-
-          </div>
-        </div>
-      </div>
+            <p id="message"></p> </div>
     </div>
-  </section>
-
-  <script src="js/auth.js"></script>
+    <script src="js/auth.js"></script>
 </body>
-
 </html>

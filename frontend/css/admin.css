@@ -1,223 +1,171 @@
-/* --- Admin Dashboard Styling --- */
+/* --- Admin Base & Frosted Glass --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --admin-primary: #2c3e50; /* Dark Slate Blue */
+  --admin-secondary: #34495e; /* Lighter Slate Blue */
+  --admin-accent: #3498db; /* Blue */
+  --frost-background-admin: rgba(255, 255, 255, 0.15);
+  --border-color-admin: rgba(255, 255, 255, 0.25);
+}
+
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f7f6;
+  background: linear-gradient(135deg, #34495e, #2c3e50); /* Dark Slate Gradient */
+  background-attachment: fixed;
   color: #333;
   margin: 0;
 }
 
+/* --- Admin Header --- */
 .admin-header {
-  background: #2c3e50;
-  color: white;
+  background: var(--frost-background-admin);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   padding: 15px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--border-color-admin);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .admin-header h1 {
+  color: var(--admin-primary);
   margin: 0;
   font-size: 24px;
 }
-
-.admin-header nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.nav-link {
-  color: white;
+.admin-header nav { display: flex; align-items: center; gap: 20px; }
+.admin-header .nav-link {
+  color: var(--admin-primary);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
-
-.nav-link:hover {
-  color: #3498db;
-}
-
-.logout-button {
+.admin-header .nav-link:hover { color: var(--admin-accent); }
+.admin-header .logout-button {
   background: #e74c3c;
   border: none;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 15px;
-  transition: background-color 0.3s;
+  font-weight: 600; font-size: 15px; transition: background-color 0.3s;
 }
+.admin-header .logout-button:hover { background: #c0392b; }
 
-.logout-button:hover {
-  background: #c0392b;
-}
-
+/* --- Admin Container --- */
 .admin-container {
   max-width: 1400px;
   margin: 30px auto;
   padding: 0 20px;
 }
 
-/* Stats */
-.stats-grid {
+/* --- Stats --- */
+.stats-grid { /* Use grid for stats */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 25px;
   margin-bottom: 30px;
 }
 
-.stat-card {
-  background: white;
+.stat-card { /* Frosty Stat Card */
+  background: var(--frost-background-admin);
+  border: 1px solid var(--border-color-admin);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  border-left: 5px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-
 .stat-card h2 {
   margin-top: 0;
-  font-size: 18px;
-  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+  color: #eee; /* Light text for heading */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-
 .stat-card p {
-  margin: 0;
-  font-size: 36px;
+  margin: 5px 0 0 0;
+  font-size: 38px;
   font-weight: 700;
-  color: #2c3e50;
+  color: #fff; /* White text for number */
 }
+/* Optional: Add subtle color accents */
+.stat-card.complaints { border-top: 4px solid #f39c12; }
+.stat-card.fees { border-top: 4px solid #e74c3c; }
+.stat-card.students { border-top: 4px solid #3498db; }
 
-.stat-card.complaints {
-  border-color: #f39c12;
-}
-
-.stat-card.fees {
-  border-color: #e74c3c;
-}
-
-.stat-card.students {
-  border-color: #3498db;
-}
-
-/* Data Tables */
-.data-section {
-  background: white;
+/* --- Data Sections (Tables) --- */
+.data-section { /* Frosty Section Box */
+  background: var(--frost-background-admin);
+  border: 1px solid var(--border-color-admin);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
-
 .data-section h2 {
   margin-top: 0;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  color: #2c3e50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 15px;
+  color: #fff; /* White heading */
+  font-weight: 600;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-}
+.table-container { width: 100%; overflow-x: auto; }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  color: #eee; /* Light text for table content */
 }
 
-th,
-td {
-  padding: 12px 15px;
+th, td {
+  padding: 14px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   white-space: nowrap;
 }
 
 th {
-  background-color: #f4f7f6;
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly lighter frost */
   font-weight: 700;
-  color: #333;
+  color: #fff; /* White header text */
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
 }
 
 tbody tr:hover {
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.08); /* Subtle hover */
 }
 
-/* Status & Actions */
+/* Status Tags */
 .status {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-  text-transform: capitalize;
+  padding: 5px 12px; border-radius: 20px; font-size: 12px;
+  font-weight: 600; color: white; text-transform: capitalize;
 }
+.status-submitted { background-color: #f39c12; }
+.status-in-progress { background-color: #3498db; }
+.status-resolved { background-color: #2ecc71; }
 
-.status-submitted {
-  background-color: #f39c12;
-}
-
-.status-in-progress {
-  background-color: #3498db;
-}
-
-.status-resolved {
-  background-color: #2ecc71;
-}
-
-.action-select {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-}
-
-/* --- (NEW) Action Button Styles --- */
-.action-btn-group {
-  display: flex;
-  gap: 8px;
-}
-
+/* Action Buttons */
+.action-btn-group { display: flex; gap: 8px; }
 .action-btn {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  color: white;
-  transition: background-color 0.3s;
+  padding: 7px 12px; border: none; border-radius: 5px; cursor: pointer;
+  font-weight: 600; font-size: 12px; color: white; transition: background-color 0.3s;
 }
-
-/* This is the red-ish button you wanted */
-.btn-progress {
-  background-color: #f39c12;
-  /* Orange/Yellow */
-}
-
-.btn-progress:hover {
-  background-color: #e67e22;
-}
-
-.btn-resolve {
-  background-color: #2ecc71;
-  /* Green */
-}
-
-.btn-resolve:hover {
-  background-color: #27ae60;
-}
-
-.btn-disabled {
-  background-color: #95a5a6;
-  cursor: not-allowed;
-}
-
-.table td,
-.table th {
-  padding: 0.8em 0.75em;
-}
+.btn-progress { background-color: #f39c12; }
+.btn-progress:hover { background-color: #e67e22; }
+.btn-resolve { background-color: #2ecc71; }
+.btn-resolve:hover { background-color: #27ae60; }
+.btn-disabled { background-color: #95a5a6; cursor: not-allowed; }

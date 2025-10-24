@@ -1,129 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- <link rel="stylesheet" href="css/style.css" /> -->
-  <!-- <link rel="stylesheet" href="css/admin.css" /> -->
-</head>
-
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/admin.css" /> </head>
 <body>
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item">
-        <strong id="welcome-message">Admin Dashboard</strong>
-      </a>
-    </div>
 
-    <div class="navbar-menu">
-      <div class="navbar-start">
-        <a href="#complaints-section" class="navbar-item">Complaints</a>
-        <a href="#fees-section" class="navbar-item">Fees Due</a>
-        <a href="#students-section" class="navbar-item">Students</a>
-        <a href="rooms.html" target="_blank" class="navbar-item">Room Availability</a>
+  <header class="admin-header"> <h1 id="welcome-message">Admin Dashboard</h1>
+    <nav>
+      <a href="#complaints-section" class="nav-link">Complaints</a>
+      <a href="#fees-section" class="nav-link">Fees Due</a>
+      <a href="#students-section" class="nav-link">Students</a>
+      <a href="rooms.html" target="_blank" class="nav-link">Room Availability</a>
+      <button id="logout-btn" class="logout-button">Logout</button>
+    </nav>
+  </header>
+
+  <main class="admin-container"> <section class="stats-grid"> <div class="stat-card complaints"> <h2>Pending Complaints</h2>
+        <p id="stats-complaints">0</p>
       </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <button id="logout-btn" class="button is-danger">Logout</button>
-          </div>
-        </div>
+      <div class="stat-card fees"> <h2>Pending Fees</h2>
+        <p id="stats-fees">0</p>
       </div>
-    </div>
-  </nav>
+      <div class="stat-card students"> <h2>Total Students</h2>
+        <p id="stats-students">0</p>
+      </div>
+    </section>
 
-  <section class="section">
-    <div class="container is-fluid">
-        <nav class="level">
-          <div class="level-item has-text-centered">
-            <div>
-              <p class="heading">Pending Complaints</p>
-              <p class="title" id="stats-complaints">0</p>
-            </div>
-          </div>
-          <div class="level-item has-text-centered">
-            <div>
-              <p class="heading">Pending Fees</p>
-              <p class="title" id="stats-fees">0</p>
-            </div>
-          </div>
-          <div class="level-item has-text-centered">
-            <div>
-              <p class="heading">Total Students</p>
-              <p class="title" id="stats-students">0</p>
-            </div>
-          </div>
-        </nav>
+    <section id="complaints-section" class="data-section"> <h2>Pending Complaints</h2>
+      <div class="table-container"> <table id="complaints-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>ID</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            </tbody>
+        </table>
+      </div>
+    </section>
 
-        <div class="box" id="complaints-section">
-            <h2 class="title is-4">Pending Complaints</h2>
-             <div class="table-container">
-               <table id="complaints-table" class="table is-striped is-hoverable is-fullwidth">
-                 <thead>
-                   <tr>
-                     <th>Student</th>
-                     <th>ID</th>
-                     <th>Category</th>
-                     <th>Description</th>
-                     <th>Status</th>
-                     <th>Actions</th>
-                   </tr>
-                 </thead>
-                 <tbody></tbody>
-               </table>
-             </div>
-        </div>
-        
-        <div class="box" id="fees-section">
-            <h2 class="title is-4">Pending Fees</h2>
-             <div class="table-container">
-               <table id="fees-table" class="table is-striped is-hoverable is-fullwidth">
-                 <thead>
-                   <tr>
-                     <th>Student</th>
-                     <th>ID</th>
-                     <th>Semester</th>
-                     <th>Phone</th>
-                     <th>Amount Due</th>
-                   </tr>
-                 </thead>
-                 <tbody></tbody>
-               </table>
-             </div>
-        </div>
-        
-        <div class="box" id="students-section">
-            <h2 class="title is-4">All Student Data</h2>
-             <div class="table-container">
-               <table id="students-table" class="table is-striped is-hoverable is-fullwidth">
-                 <thead>
-                   <tr>
-                     <th>Name</th>
-                     <th>ID</th>
-                     <th>Semester</th>
-                     <th>Student Phone</th>
-                     <th>Parent Name</th>
-                     <th>Parent Phone</th>
-                     <th>Address</th>
-                   </tr>
-                 </thead>
-                 <tbody></tbody>
-               </table>
-             </div>
-        </div>
-    </div>
-  </section>
+    <section id="fees-section" class="data-section"> <h2>Pending Fees</h2>
+      <div class="table-container"> <table id="fees-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>ID</th>
+              <th>Semester</th>
+              <th>Phone</th>
+              <th>Amount Due</th>
+            </tr>
+          </thead>
+          <tbody>
+            </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="students-section" class="data-section"> <h2>All Student Data</h2>
+      <div class="table-container"> <table id="students-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+              <th>Semester</th>
+              <th>Student Phone</th>
+              <th>Parent Name</th>
+              <th>Parent Phone</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 
   <script src="js/admin-dashboard.js"></script>
 </body>
-
 </html>

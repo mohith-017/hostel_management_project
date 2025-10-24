@@ -1,81 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-
-  <title>Available Rooms</title>
-  <link rel="stylesheet" href="css/style.css" /> 
-   <!-- <link rel="stylesheet" href="css/admin.css" />  -->
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hostel Room Availability</title>
+    <link rel="stylesheet" href="css/style.css" /> </head>
 <body>
-  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-     <div class="navbar-brand">
-       <a class="navbar-item" href="dashboard.html"> <strong>Hostel Room Availability</strong>
-       </a>
-     </div>
-     <div class="navbar-end">
-       <div class="navbar-item">
-         <div class="buttons">
-           <button id="logout-btn" class="button is-danger">Logout</button>
-         </div>
-       </div>
-     </div>
-   </nav>
-  
-  <div id="toast-container"></div> <section class="section">
-    <div class="container">
-       <div class="columns is-centered">
-         <div class="column is-half">
-            <div class="box">
-               <div class="field">
-                 <label class="label">Select Block</label>
-                 <div class="control has-icons-left">
-                   <div class="select is-fullwidth">
-                     <select id="block-select">
-                       <option value="">-- Select Block --</option>
-                       <option value="A">Block A</option>
-                       <option value="B">Block B</option>
-                       <option value="C">Block C</option>
-                     </select>
-                   </div>
-                    <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
-                 </div>
-               </div>
-               
-               <div class="field">
-                 <label class="label">Select Floor</label>
-                 <div class="control has-icons-left">
-                   <div class="select is-fullwidth">
-                     <select id="floor-select">
-                       <option value="">-- Select Floor --</option>
-                       <option value="1">Floor 1</option>
-                       <option value="2">Floor 2</option>
-                       <option value="3">Floor 3</option>
-                       <option value="4">Floor 4</option>
-                     </select>
-                   </div>
-                    <span class="icon is-small is-left"><i class="fas fa-layer-group"></i></span>
-                 </div>
-               </div>
-               
-               <div class="field">
-                 <button id="find-rooms-btn" class="button is-info is-fullwidth">Find Rooms</button>
-               </div>
-            </div>
-         </div>
-       </div>
-
-       <div id="view-container" class="mt-5">
-           </div>
+    <header class="header"> <h1>Hostel Room Availability</h1>
+        <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+    </header>
+    
+    <div id="toast-container"></div> <div class="selection-controls"> <select id="block-select">
+            <option value="">-- Select Block --</option>
+            <option value="A">Block A</option>
+            <option value="B">Block B</option>
+            <option value="C">Block C</option>
+        </select>
+        <select id="floor-select">
+            <option value="">-- Select Floor --</option>
+            <option value="1">Floor 1</option>
+            <option value="2">Floor 2</option>
+            <option value="3">Floor 3</option>
+            <option value="4">Floor 4</option>
+        </select>
+        <button id="find-rooms-btn">Find Rooms</button>
     </div>
-  </section>
 
-  <script src="js/rooms.js"></script>
+    <div id="view-container" class="view-container"> 
+        </div>
+
+    <script src="js/rooms.js"></script>
 </body>
 </html>

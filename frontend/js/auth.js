@@ -202,3 +202,10 @@ function showMessage(msg, type = 'error') {
   // Use Bulma notification classes
   messageEl.className = `notification mt-4 ${type === 'success' ? 'is-success' : 'is-danger'}`;
 }
+
+function showMessage(msg, type = 'error') {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = msg;
+  // Use custom classes for styling
+  messageEl.className = ` ${type}`; // Add 'success' or 'error' class
+}

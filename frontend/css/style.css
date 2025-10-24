@@ -1,68 +1,93 @@
-/* --- Google Font Import & General Body Styling --- */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #f0f2f5;
-  color: #333;
-  margin: 0;
-  padding: 0;
+/* --- Base Styles & Frosted Glass --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-color: #0a3d62; /* Dark Blue */
+  --secondary-color: #60a5fa; /* Light Blue */
+  --accent-color: #38bdf8; /* Brighter Blue */
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
+  --warning-color: #f39c12;
+  --light-text: #f8f9fa;
+  --dark-text: #343a40;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --frost-background: rgba(255, 255, 255, 0.1); /* Low opacity white */
 }
 
-/* --- Auth Page (index.html) --- */
-.container {
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--dark-text);
+  background: linear-gradient(135deg, #60a5fa, #0a3d62); /* Light to Dark Blue Gradient */
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Frosted Glass Container Style */
+.frost-container {
+  background: var(--frost-background);
+  border-radius: 16px;
+  padding: 30px 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  backdrop-filter: blur(10px); /* The Frosted Effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+
+/* --- Login Page (index.html) --- */
+.login-page-wrapper { /* New wrapper for centering */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-box { /* Apply frost to this */
+  max-width: 400px;
+  width: 100%;
 }
 
 .form-section {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 16px;
-  width: 350px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .form-section h2 {
-  color: #1e3a8a;
+  color: var(--light-text); /* White text on frosted */
   font-weight: 700;
   margin-bottom: 25px;
 }
 
 .form-section input,
-.form-section select,
-textarea {
+.form-section select {
   box-sizing: border-box;
   width: 100%;
   padding: 14px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly opaque white */
+  color: var(--dark-text);
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-
-.form-section input:hover,
-.form-section select:hover,
-textarea:hover {
-  border-color: #3b82f6;
+.form-section input::placeholder {
+  color: #6c757d;
 }
 
 .form-section input:focus,
-.form-section select:focus,
-textarea:focus {
+.form-section select:focus {
   outline: none;
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4);
 }
 
 button {
   width: 100%;
   padding: 14px;
-  background-color: #1e3a8a;
+  background-color: var(--secondary-color);
   border: none;
   border-radius: 8px;
   color: white;
@@ -73,26 +98,29 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #2563eb;
+button:hover:not(:disabled) {
+  background-color: var(--accent-color);
 }
-
 button:disabled {
   background-color: #9ca3af;
   cursor: not-allowed;
 }
 
+.form-section p {
+  color: var(--light-text);
+  margin-top: 15px;
+}
+
 .form-section a {
-  color: #2563eb;
+  color: var(--accent-color);
   text-decoration: none;
   font-weight: 600;
 }
-
 .form-section a:hover {
   text-decoration: underline;
 }
 
-.hidden {
+.hidden { /* Basic hide class */
   display: none !important;
 }
 
@@ -100,39 +128,64 @@ button:disabled {
   margin-top: 15px;
   font-size: 14px;
   font-weight: 600;
+  padding: 10px;
+  border-radius: 6px;
+  display: none; /* Hide initially */
+}
+#message.success {
+  background-color: rgba(46, 204, 113, 0.7);
+  color: white;
+  display: block;
+}
+#message.error {
+  background-color: rgba(231, 76, 60, 0.7);
+  color: white;
+  display: block;
+}
+
+/* Make signup scrollable if needed */
+#signup-section {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 15px; /* space for scrollbar */
 }
 
 /* --- Global Header --- */
 .header {
-  background: #1e3a8a;
-  color: white;
+  background: var(--frost-background);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   padding: 15px 40px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header h1 {
+  color: var(--primary-color);
   font-size: 24px;
   font-weight: 700;
   margin: 0;
 }
 
 .logout-button {
-  background: #ef4444;
+  background: var(--error-color);
   width: auto;
   padding: 10px 20px;
   font-size: 15px;
-  margin-top: 0;
+  margin-top: 0; /* Override default button margin */
 }
-
 .logout-button:hover {
-  background: #dc2626;
+  background: #c0392b; /* Darker red */
 }
 
 .back-button {
-  background: #60a5fa;
+  background: var(--secondary-color);
   color: white;
   text-decoration: none;
   padding: 10px 20px;
@@ -141,185 +194,15 @@ button:disabled {
   font-weight: 600;
   transition: background-color 0.3s;
 }
-
 .back-button:hover {
-  background: #3b82f6;
+  background: var(--accent-color);
 }
 
-
-/* --- Rooms Page (rooms.html) --- */
-.selection-controls {
-  box-sizing: border-box;
-  width: 60%;
-  max-width: 700px;
-  margin: 60px auto;
-  padding: 40px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e5e7eb;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.selection-controls select,
-.selection-controls button {
-  box-sizing: border-box;
-  width: 80%;
-  max-width: 400px;
-  padding: 16px;
-  margin: 0;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.selection-controls select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 1rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em;
-  padding-right: 2.5rem;
-}
-
-.selection-controls select:hover,
-.selection-controls button:hover {
-  border-color: #3b82f6;
-}
-
-.selection-controls select:focus {
-  outline: none;
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
-}
-
-.view-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 0 30px 30px 30px;
-  width: 60vw;
-  margin-left: 215px;
-}
-
-.room-box {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 20px;
-  width: 175px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid #e5e7eb;
-}
-
-
-.room-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.room-box h3 {
-  background: #2563eb;
-  color: white;
-  border-radius: 8px;
-  padding: 10px;
-  margin: -20px -20px 20px -20px;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.beds-layout {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 35px;
-  padding: 20px;
-}
-
-.bed-item {
-  text-align: center;
-  position: relative;
-  width: 200px;
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.bed-svg {
-  width: 100%;
-  height: 100px;
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  margin-bottom: 5px;
-}
-
-.bed-number-label {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: #555;
-  margin: 0;
-  padding: 0;
-}
-
-.bed-base {
-  fill: #ecf0f1;
-  stroke: #bdc3c7;
-  stroke-width: 2px;
-}
-
-.bed-pillow {
-  fill: #ffffff;
-  stroke: #ccc;
-  stroke-width: 1px;
-}
-
-.bed-mattress {
-  fill: #fcfcfc;
-  stroke: #e0e0e0;
-  stroke-width: 1px;
-}
-
-.bed-svg.available .bed-base {
-  fill: #2ecc71;
-  stroke: #27ae60;
-}
-
-.bed-svg.window-side .bed-base {
-  fill: #f39c12;
-  stroke: #e67e22;
-}
-
-.bed-svg.occupied .bed-base {
-  fill: #bdc3c7;
-  stroke: #95a5a6;
-  cursor: not-allowed;
-}
-
-.bed-svg:not(.occupied):hover {
-  transform: translateY(-5px) scale(1.02);
-  filter: brightness(1.05);
-}
-
-.bed-svg:not(.occupied):hover .bed-base {
-  filter: brightness(0.9);
-}
-
-/* --- (NEW) Dashboard Page --- */
+/* --- Dashboard --- */
 .dashboard-container {
   padding: 40px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .dashboard-grid {
@@ -329,294 +212,274 @@ button:disabled {
   margin-bottom: 40px;
 }
 
-.dashboard-card {
-  background: #ffffff;
+.dashboard-card { /* Apply frost */
+  background: var(--frost-background);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   text-decoration: none;
-  color: #333;
+  color: var(--dark-text);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #e5e7eb;
+  display: block;
 }
 
 .dashboard-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
 }
 
 .dashboard-card h3 {
-  color: #1e3a8a;
+  color: var(--primary-color);
   font-size: 22px;
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 10px;
 }
-
 .dashboard-card p {
   font-size: 16px;
   color: #555;
   line-height: 1.6;
 }
 
-.info-section {
-  background: #ffffff;
+/* Sections on Dashboard/Fees/Complaints */
+.info-section, /* Apply frost */
+.container-small > div { /* Apply frost to direct children of container-small */
+  background: var(--frost-background);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   margin-bottom: 30px;
 }
 
-.info-section h2 {
-  color: #1e3a8a;
-  border-bottom: 2px solid #3b82f6;
+.info-section h2,
+.container-small h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--secondary-color);
   padding-bottom: 10px;
+  margin-top: 0;
 }
 
-.info-card {
-  margin-bottom: 20px;
-}
+.info-card { margin-bottom: 20px; }
+.info-card h3 { color: var(--primary-color); margin-bottom: 10px; }
+.info-card p { margin: 5px 0; line-height: 1.7; }
 
-.info-card h3 {
-  color: #2563eb;
-  margin-bottom: 10px;
-}
-
-.info-card p {
-  margin: 5px 0;
-  line-height: 1.7;
-}
-
-.gallery {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
+.gallery { display: flex; gap: 15px; flex-wrap: wrap; }
 .gallery img {
   width: 200px;
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
 }
 
-/* --- (NEW) Small Container for Fees & Complaints --- */
+/* My Room Details */
+#my-room-section {
+  background: rgba(96, 165, 250, 0.15); /* Light blue frost */
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+#my-room-section h2 { color: var(--primary-color); border-color: var(--secondary-color); }
+#room-details-content p { font-size: 18px; line-height: 1.8; }
+#room-details-content strong { color: var(--primary-color); }
+#room-details-content .room-highlight { font-weight: 700; font-size: 20px; color: var(--primary-color); }
+#room-details-content .no-room-message { font-style: italic; color: #555; }
+
+/* --- Rooms Page --- */
+.selection-controls { /* Apply frost */
+  box-sizing: border-box;
+  max-width: 600px;
+  margin: 40px auto;
+  background: var(--frost-background);
+  border-radius: 16px;
+  padding: 30px 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.selection-controls select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  margin: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--dark-text);
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em;
+  padding-right: 3rem;
+}
+.selection-controls select:focus {
+   outline: none;
+   border-color: var(--accent-color);
+   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4);
+}
+
+.selection-controls button {
+    width: 100%;
+    margin-top: 0; /* Override default button margin */
+}
+
+.view-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.view-container .box { /* Style for the room detail box */
+    background: var(--frost-background);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Simplified Bed Boxes (using your old classes) */
+.beds-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Reduced gap */
+  padding: 20px 0;
+}
+
+.bed-item { /* Frosty bed box */
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  width: 150px; /* Smaller boxes */
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.bed-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.bed-item.available { border-left: 5px solid var(--success-color); }
+.bed-item.window-side { border-left: 5px solid var(--warning-color); }
+.bed-item.occupied {
+  border-left: 5px solid #95a5a6;
+  background: rgba(200, 200, 200, 0.2);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.bed-item.occupied:hover { transform: none; }
+
+.bed-number-label {
+  font-size: 1.5em; /* Larger bed number */
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 5px 0;
+}
+.bed-item p {
+  font-size: 0.8em;
+  color: #555;
+  margin: 0;
+}
+
+/* --- Fees & Complaints Specific --- */
 .container-small {
   max-width: 800px;
   margin: 40px auto;
   padding: 0 20px;
 }
 
-#fee-status-box,
-#complaint-form-box,
-#past-complaints-box {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
-  margin-bottom: 30px;
+#fee-details p, #complaint-form-box p, #past-complaints-box p {
+  font-size: 16px; line-height: 1.7;
+}
+#fee-details span { font-weight: 600; }
+
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--dark-text);
+  resize: vertical; /* Allow vertical resize */
+}
+textarea:focus {
+   outline: none;
+   border-color: var(--accent-color);
+   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4);
 }
 
-#fee-status-box h2,
-#complaint-form-box h2,
-#past-complaints-box h2 {
-  color: #1e3a8a;
-  margin-top: 0;
-}
-
-#fee-details p {
-  font-size: 18px;
-  line-height: 1.8;
-}
-
-#fee-details span {
-  font-weight: 600;
-}
-
-#api-message,
-#complaint-api-message {
-  margin-top: 15px;
-  font-weight: 600;
-}
-
-/* --- (NEW) Complaint List Styling --- */
-.complaint-item {
-  border: 1px solid #e5e7eb;
+.complaint-item { /* Frosty complaint item */
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
-  background: #f9fafb;
 }
-
-.complaint-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.complaint-header strong {
-  color: #1e3a8a;
-}
-
-.complaint-item p {
-  margin: 5px 0;
-  color: #333;
-}
-
-.complaint-item small {
-  color: #777;
-}
+.complaint-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.complaint-header strong { color: var(--primary-color); font-size: 1.1em; }
+.complaint-item p { margin: 5px 0; color: #444; }
+.complaint-item small { color: #777; font-size: 0.85em; }
 
 .status {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
   font-weight: 600;
   color: white;
+  text-transform: capitalize;
 }
+.status-submitted { background-color: var(--warning-color); }
+.status-in-progress { background-color: var(--secondary-color); }
+.status-resolved { background-color: var(--success-color); }
 
-.status-submitted {
-  background-color: #f39c12;
-}
-
-.status-in-progress {
-  background-color: #3b82f6;
-}
-
-.status-resolved {
-  background-color: #2ecc71;
-}
-
+/* --- Toast Notification --- */
 #toast-container {
   position: fixed;
-  top: 20px;
+  top: 80px; /* Below sticky header */
   right: 20px;
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
 }
-
 .toast {
-  background-color: #333;
-  color: white;
+  background: var(--frost-background);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--dark-text);
   padding: 15px 25px;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  font-size: 15px;
   font-weight: 600;
   opacity: 0;
   transform: translateX(100%);
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  border-left: 5px solid; /* Add colored border */
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.toast.toast-success {
-  background-color: #2ecc71;
-  color: white;
-}
-
-.toast.toast-error {
-  background-color: #e74c3c;
-  color: white;
-}
-
-
-#signup-section {
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/* --- (NEW) My Room Details Section --- */
-#my-room-section {
-  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-  /* Light blue gradient */
-  border: 1px solid #7dd3fc;
-  /* Sky blue border */
-}
-
-#my-room-section h2 {
-  color: #0c4a6e;
-  /* Darker blue */
-  border-bottom: 2px solid #38bdf8;
-  /* Brighter blue */
-}
-
-#room-details-content p {
-  font-size: 18px;
-  line-height: 1.8;
-}
-
-#room-details-content strong {
-  color: #075985;
-  /* Even darker blue */
-}
-
-#room-details-content .room-highlight {
-  font-weight: 700;
-  font-size: 20px;
-  color: #0369a1;
-}
-
-#room-details-content .no-room-message {
-  font-style: italic;
-  color: #555;
-}
-
-/* Keep only custom styles Bulma doesn't handle */
-
-/* Example: Keep Toast styles */
-#toast-container {
-  position: fixed; /* Use Bulma 'is-fixed-top-right' or keep custom */
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-/* ... (rest of toast styles) ... */
-
-/* Example: Keep Bed SVG styles IF you didn't switch to Bulma boxes/icons */
-/*
-.beds-layout { ... }
-.bed-item { ... }
-.bed-svg { ... }
-.bed-base { ... }
-... etc ...
-*/
-
-/* Example: Keep specific dashboard card link style if needed */
-.dashboard-card-link {
-    display: block; /* Make the whole card clickable */
-    height: 100%;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-.dashboard-card-link:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* Add custom adjustments as needed */
-.gallery img {
-  border-radius: 4px; /* Bulma uses 4px */
-  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-}
-
-/* Adjustments for room booking boxes/icons if used */
-.bed-box {
-    padding: 1rem;
-    border-radius: 6px;
-}
-.bed-box .icon { margin-bottom: 0.5rem; }
-.bed-box p { margin-bottom: 0.25rem; }
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast.toast-success { border-left-color: var(--success-color); }
+.toast.toast-error { border-left-color: var(--error-color); }

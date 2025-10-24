@@ -1,50 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- <link rel="stylesheet" href="css/style.css" /> 
-   <link rel="stylesheet" href="css/admin.css" />  -->
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complaint Box</title>
+    <link rel="stylesheet" href="css/style.css" /> </head>
 <body>
 
-  <header class="header">
-    <h1>Complaint Box</h1>
-    <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
-  </header>
+    <header class="header"> <h1>Complaint Box</h1>
+        <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+    </header>
 
-  <main class="container-small">
-    
-    <div id="complaint-form-box">
-      <h2>Submit a New Complaint</h2>
-      <select id="complaint-category">
-        <option value="">-- Select Category --</option>
-        <option value="Electrical">Electrical</option>
-        <option value="Plumbing">Plumbing</option>
-        <option value="Mess">Mess</option>
-        <option value="Wi-Fi">Wi-Fi</option>
-        <option value="Other">Other</option>
-      </select>
-      <textarea id="complaint-desc" rows="5" placeholder="Describe your issue..."></textarea>
-      <button id="submit-complaint-btn">Submit Complaint</button>
-      <p id="complaint-api-message"></p>
-    </div>
+    <main class="container-small"> <div id="complaint-form-box">
+            <h2>Submit a New Complaint</h2>
+            <select id="complaint-category">
+                <option value="">-- Select Category --</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Mess">Mess</option>
+                <option value="Wi-Fi">Wi-Fi</option>
+                <option value="Other">Other</option>
+            </select>
+            <textarea id="complaint-desc" rows="5" placeholder="Describe your issue..."></textarea>
+            <button id="submit-complaint-btn">Submit Complaint</button>
+            <p id="complaint-api-message"></p> </div>
 
-    <div id="past-complaints-box">
-      <h2>Your Past Complaints</h2>
-      <div id="complaints-list">
-        <p>Loading your complaints...</p>
-      </div>
-    </div>
-    
-  </main>
+        <div id="past-complaints-box">
+            <h2>Your Past Complaints</h2>
+            <div id="complaints-list">
+                <p>Loading your complaints...</p> </div>
+        </div>
+        
+    </main>
 
-  <script src="js/complaints.js"></script>
+    <script src="js/complaints.js"></script>
 </body>
 </html>

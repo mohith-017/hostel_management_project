@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- <link rel="stylesheet" href="css/style.css" /> 
-   <link rel="stylesheet" href="css/admin.css" />  -->
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fee Payment</title>
+    <link rel="stylesheet" href="css/style.css" /> </head>
 <body>
 
-  <header class="header">
-    <h1>Fee Payment</h1>
-    <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
-  </header>
+    <header class="header"> <h1>Fee Payment</h1>
+        <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+    </header>
 
-  <main class="container-small">
-    <div id="fee-status-box">
-      <h2>Your Fee Status</h2>
-      <p id="fee-message">Loading fee details...</p>
-      
-      <div id="fee-details" class="hidden">
-        <p><strong>Amount:</strong> <span id="fee-amount"></span></p>
-        <p><strong>Status:</strong> <span id="fee-status"></span></p>
-        <p id="payment-date"></p>
-        
-        <button id="pay-button">Pay Now (Simulated)</button>
-      </div>
-      
-      <p id="api-message"></p>
-    </div>
-  </main>
+    <main class="container-small"> <div id="fee-status-box">
+            <h2>Your Fee Status</h2>
+            <p id="fee-message">Loading fee details...</p>
+            
+            <div id="fee-details" class="hidden"> <p><strong>Amount:</strong> <span id="fee-amount"></span></p>
+                <p><strong>Status:</strong> <span id="fee-status"></span></p>
+                <p id="payment-date"></p>
+                
+                <button id="pay-button">Pay Now (Simulated)</button>
+            </div>
+            
+            <p id="api-message"></p> </div>
+    </main>
 
-  <script src="js/fees.js"></script>
+    <script src="js/fees.js"></script>
 </body>
 </html>

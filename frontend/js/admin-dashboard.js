@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
   if (!user || user.role !== 'admin') {
+    // Use alert for critical auth issues before redirecting
     alert("You are not authorized to view this page.");
-    window.location.href = 'dashboard.html';
+    window.location.href = 'dashboard.html'; // Redirect non-admins
     return;
   }
 
@@ -36,7 +37,10 @@ async function fetchApi(endpoint) {
   const res = await fetch(`${baseUrl}/api/admin${endpoint}`, {
     headers: { 'Authorization': `Bearer ${token}` }
   });
-  if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
+  if (!res.ok) {
+     const errorData = await res.json(); // Try to get error message from backend
+     throw new Error(errorData.error || `Failed to fetch ${endpoint} (${res.status})`);
+  }
   return await res.json();
 }
 
@@ -48,17 +52,24 @@ async function fetchStats() {
     document.getElementById('stats-fees').textContent = stats.pendingFees;
     document.getElementById('stats-students').textContent = stats.totalStudents;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching stats:", error);
+    // Optionally display an error message for stats somewhere
   }
 }
 
-// 2. Fetch Complaints (UPDATED)
+// 2. Fetch Complaints (Corrected Version)
 async function fetchComplaints() {
   try {
     const complaints = await fetchApi('/complaints');
-    const tableBody = document.getElementById('complaints-table').querySelector('tbody');
-    tableBody.innerHTML = ''; // Clear
-    
+    const tableBody = document.getElementById('complaints-table')?.querySelector('tbody'); // Added safe navigation (?)
+
+    if (!tableBody) {
+      console.error("Complaints table body not found!");
+      return;
+    }
+
+    tableBody.innerHTML = ''; // Clear previous content
+
     if (complaints.length === 0) {
       tableBody.innerHTML = '<tr><td colspan="6">No pending complaints found!</td></tr>';
       return;
@@ -66,8 +77,8 @@ async function fetchComplaints() {
 
     complaints.forEach(c => {
       const row = tableBody.insertRow();
-      
-      // (NEW) Create action buttons based on status
+
+      // Create action buttons based on status using custom CSS classes
       let actionButtons = '';
       if (c.status === 'Submitted') {
         actionButtons = `
@@ -78,10 +89,11 @@ async function fetchComplaints() {
         actionButtons = `
           <button class="action-btn btn-resolve" data-id="${c._id}" data-status="Resolved">Resolve</button>
         `;
-      } else {
+      } else { // Should not happen with current fetch logic, but handle just in case
         actionButtons = `<button class="action-btn btn-disabled" disabled>Resolved</button>`;
       }
 
+      // Populate row using custom CSS classes for status
       row.innerHTML = `
         <td>${c.student?.name || 'N/A'}</td>
         <td>${c.student?.admissionNo || 'N/A'}</td>
@@ -96,28 +108,44 @@ async function fetchComplaints() {
       `;
     });
 
-    // (NEW) Add event listeners to all action buttons
-    document.querySelectorAll('.action-btn').forEach(button => {
+    // Add event listeners to all generated action buttons
+    tableBody.querySelectorAll('.action-btn').forEach(button => {
       if (button.disabled) return; // Skip disabled buttons
-      
-      button.addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        const newStatus = e.target.dataset.status;
-        updateComplaintStatus(id, newStatus);
-      });
+
+      // Remove potential old listeners before adding new ones
+      button.replaceWith(button.cloneNode(true)); // Simple way to clear listeners
     });
 
+    // Re-query buttons after cloning and add new listeners
+     tableBody.querySelectorAll('.action-btn:not(:disabled)').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            const newStatus = e.target.dataset.status;
+            // Add confirmation before updating
+            if(confirm(`Are you sure you want to change status to "${newStatus}"?`)){
+                 updateComplaintStatus(id, newStatus);
+            }
+          });
+     });
+
+
   } catch (error) {
-    console.error(error);
-    document.getElementById('complaints-table').querySelector('tbody').innerHTML = '<tr><td colspan="6">Error loading complaints.</td></tr>';
+    console.error("Error loading complaints:", error);
+     const tableBody = document.getElementById('complaints-table')?.querySelector('tbody');
+     if(tableBody) {
+        tableBody.innerHTML = `<tr><td colspan="6">Error loading complaints: ${error.message}</td></tr>`;
+     }
   }
 }
+
 
 // 3. Fetch Fees
 async function fetchFees() {
   try {
     const fees = await fetchApi('/fees');
-    const tableBody = document.getElementById('fees-table').querySelector('tbody');
+    const tableBody = document.getElementById('fees-table')?.querySelector('tbody');
+     if (!tableBody) return; // Check if element exists
+
     tableBody.innerHTML = ''; // Clear
 
     if (fees.length === 0) {
@@ -136,8 +164,11 @@ async function fetchFees() {
       `;
     });
   } catch (error) {
-    console.error(error);
-    document.getElementById('fees-table').querySelector('tbody').innerHTML = '<tr><td colspan="5">Error loading fees.</td></tr>';
+    console.error("Error loading fees:", error);
+     const tableBody = document.getElementById('fees-table')?.querySelector('tbody');
+     if(tableBody){
+        tableBody.innerHTML = `<tr><td colspan="5">Error loading fees: ${error.message}</td></tr>`;
+     }
   }
 }
 
@@ -145,7 +176,9 @@ async function fetchFees() {
 async function fetchStudents() {
   try {
     const students = await fetchApi('/students');
-    const tableBody = document.getElementById('students-table').querySelector('tbody');
+    const tableBody = document.getElementById('students-table')?.querySelector('tbody');
+     if (!tableBody) return; // Check if element exists
+
     tableBody.innerHTML = ''; // Clear
 
     if (students.length === 0) {
@@ -166,12 +199,15 @@ async function fetchStudents() {
       `;
     });
   } catch (error) {
-    console.error(error);
-    document.getElementById('students-table').querySelector('tbody').innerHTML = '<tr><td colspan="7">Error loading students.</td></tr>';
+    console.error("Error loading students:", error);
+     const tableBody = document.getElementById('students-table')?.querySelector('tbody');
+     if(tableBody){
+        tableBody.innerHTML = `<tr><td colspan="7">Error loading students: ${error.message}</td></tr>`;
+     }
   }
 }
 
-// 5. Function to update complaint status (UPDATED)
+// 5. Function to update complaint status
 async function updateComplaintStatus(id, newStatus) {
   try {
     const res = await fetch(`${baseUrl}/api/complaints/${id}`, {
@@ -183,79 +219,20 @@ async function updateComplaintStatus(id, newStatus) {
       body: JSON.stringify({ status: newStatus })
     });
 
-    if (!res.ok) throw new Error('Failed to update status');
-    
-    // Refresh only the complaints table for efficiency
-    fetchComplaints();
-    // Also refresh stats, as pending count might change
-    fetchStats();
-  } catch (error) {
-    console.error(error);
-    alert("Failed to update status.");
-  }
-}
+     const data = await res.json(); // Try to get response data
 
-// ... (keep top part, fetchApi, fetchStats) ...
-
-// 2. Fetch Complaints (UPDATED for Bulma tags)
-async function fetchComplaints() {
-  try {
-    const complaints = await fetchApi('/complaints');
-    const tableBody = document.getElementById('complaints-table').querySelector('tbody');
-    tableBody.innerHTML = ''; 
-    
-    if (complaints.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="6">No pending complaints found!</td></tr>';
-      return;
+    if (!res.ok) {
+        throw new Error(data.error || 'Failed to update status');
     }
 
-    complaints.forEach(c => {
-      const row = tableBody.insertRow();
-      
-      // Bulma tag classes based on status
-      let statusClass = 'is-warning'; // Submitted
-      if (c.status === 'In Progress') statusClass = 'is-info';
-      if (c.status === 'Resolved') statusClass = 'is-success';
-
-      let actionButtons = '';
-      if (c.status === 'Submitted') {
-        actionButtons = `
-          <button class="button is-small is-warning action-btn" data-id="${c._id}" data-status="In Progress">Start</button>
-          <button class="button is-small is-success action-btn" data-id="${c._id}" data-status="Resolved">Resolve</button>
-        `;
-      } else if (c.status === 'In Progress') {
-        actionButtons = `
-          <button class="button is-small is-success action-btn" data-id="${c._id}" data-status="Resolved">Resolve</button>
-        `;
-      } else {
-        actionButtons = `<span class="tag is-success">Resolved</span>`; // Show tag if resolved
-      }
-
-      row.innerHTML = `
-        <td>${c.student?.name || 'N/A'}</td>
-        <td>${c.student?.admissionNo || 'N/A'}</td>
-        <td>${c.category}</td>
-        <td>${c.description}</td>
-        <td>
-          <span class="tag ${statusClass}">${c.status}</span> 
-        </td>
-        <td>
-          <div class="buttons are-small">${actionButtons}</div> 
-        </td>
-      `;
-    });
-
-    // Add event listeners
-    document.querySelectorAll('.action-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        const newStatus = e.target.dataset.status;
-        updateComplaintStatus(id, newStatus);
-      });
-    });
+    // Refresh complaints table and stats on success
+    fetchComplaints();
+    fetchStats();
+     // Maybe show a success toast/message here if you add one later
+     console.log("Status updated successfully!");
 
   } catch (error) {
-    console.error(error);
-    document.getElementById('complaints-table').querySelector('tbody').innerHTML = '<tr><td colspan="6">Error loading complaints.</td></tr>';
+    console.error("Error updating status:", error);
+    alert(`Failed to update status: ${error.message}`); // Show specific error
   }
 }
