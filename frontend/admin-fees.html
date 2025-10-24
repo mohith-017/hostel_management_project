@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Pending Fees</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>Pending Fees</h1>
+    <nav>
+      <a href="admin-dashboard.html" class="nav-link">Dashboard</a>
+      <a href="admin-complaints.html" class="nav-link">Complaints</a>
+      <a href="admin-fees.html" class="nav-link">Fees Due</a>
+      <a href="rooms.html" target="_blank" class="nav-link">Room Availability</a>
+      <button id="logout-btn" class="logout-button">Logout</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <section id="fees-section" class="data-section">
+      <h2>Pending Fees</h2>
+      <div class="table-container">
+        <table id="fees-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>ID</th>
+              <th>Semester</th>
+              <th>Phone</th>
+              <th>Amount Due</th>
+            </tr>
+          </thead>
+          <tbody>
+             </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/admin-fees.js"></script>
+</body>
+</html>

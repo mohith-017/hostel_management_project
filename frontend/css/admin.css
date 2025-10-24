@@ -239,7 +239,8 @@ tbody tr:hover {
 }
 
 .btn-progress {
-  background-color: var(--warning-color);
+    background-color: var(--warning-color);
+    border-radius: 20px;
 }
 
 .btn-progress:hover {
@@ -248,6 +249,7 @@ tbody tr:hover {
 
 .btn-resolve {
   background-color: var(--success-color);
+  border-radius: 20px;
 }
 
 .btn-resolve:hover {
