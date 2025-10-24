@@ -1,30 +1,47 @@
-/* --- Admin Base & Frosted Glass --- */
+/* --- Admin Base & DARK Frosted Glass --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
-  --admin-primary: #2c3e50; /* Dark Slate Blue */
-  --admin-secondary: #34495e; /* Lighter Slate Blue */
-  --admin-accent: #3498db; /* Blue */
-  --frost-background-admin: rgba(255, 255, 255, 0.15);
-  --border-color-admin: rgba(255, 255, 255, 0.25);
+  --admin-primary: #1e293b;
+  /* Darker Slate */
+  --admin-secondary: #334155;
+  /* Slate */
+  --admin-accent: #64748b;
+  /* Lighter Slate */
+  --frost-background-admin: rgba(255, 255, 255, 0.1);
+  /* Slightly less visible frost */
+  --border-color-admin: rgba(255, 255, 255, 0.2);
+  --frost-blur-admin: 10px;
+  /* Slightly more blur */
+  --light-text-admin: #f1f5f9;
+  /* Off-white */
+  /* Keep colors consistent with style.css for statuses/actions */
+  --success-color: #22c55e;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  --info-color: #3b82f6;
+  /* Blue */
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #34495e, #2c3e50); /* Dark Slate Gradient */
+  background: linear-gradient(120deg, #334155, #1e293b);
+  /* Dark Slate Gradient */
   background-attachment: fixed;
-  color: #333;
+  color: #cbd5e1;
+  /* Light grey text default */
   margin: 0;
 }
 
 /* --- Admin Header --- */
 .admin-header {
-  background: var(--frost-background-admin);
+  background: rgba(255, 255, 255, 0.1);
+  /* Darker frost */
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 15px 40px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid var(--border-color-admin);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,28 +51,43 @@ body {
 }
 
 .admin-header h1 {
-  color: var(--admin-primary);
+  color: var(--light-text-admin);
   margin: 0;
   font-size: 24px;
 }
-.admin-header nav { display: flex; align-items: center; gap: 20px; }
+
+.admin-header nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .admin-header .nav-link {
-  color: var(--admin-primary);
+  color: #e2e8f0;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
-.admin-header .nav-link:hover { color: var(--admin-accent); }
+
+.admin-header .nav-link:hover {
+  color: #fff;
+}
+
 .admin-header .logout-button {
-  background: #e74c3c;
+  background: var(--error-color);
   border: none;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: 600; font-size: 15px; transition: background-color 0.3s;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.3s;
 }
-.admin-header .logout-button:hover { background: #c0392b; }
+
+.admin-header .logout-button:hover {
+  background: #dc2626;
+}
 
 /* --- Admin Container --- */
 .admin-container {
@@ -65,107 +97,166 @@ body {
 }
 
 /* --- Stats --- */
-.stats-grid { /* Use grid for stats */
+.stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
   margin-bottom: 30px;
 }
 
-.stat-card { /* Frosty Stat Card */
+.stat-card {
   background: var(--frost-background-admin);
   border: 1px solid var(--border-color-admin);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--frost-blur-admin));
+  -webkit-backdrop-filter: blur(var(--frost-blur-admin));
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+
 .stat-card h2 {
   margin-top: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #eee; /* Light text for heading */
+  color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
 .stat-card p {
   margin: 5px 0 0 0;
   font-size: 38px;
   font-weight: 700;
-  color: #fff; /* White text for number */
+  color: var(--light-text-admin);
 }
-/* Optional: Add subtle color accents */
-.stat-card.complaints { border-top: 4px solid #f39c12; }
-.stat-card.fees { border-top: 4px solid #e74c3c; }
-.stat-card.students { border-top: 4px solid #3498db; }
+
+.stat-card.complaints {
+  border-top: 4px solid var(--warning-color);
+}
+
+.stat-card.fees {
+  border-top: 4px solid var(--error-color);
+}
+
+.stat-card.students {
+  border-top: 4px solid var(--info-color);
+}
+
+/* Use info blue */
 
 /* --- Data Sections (Tables) --- */
-.data-section { /* Frosty Section Box */
+.data-section {
   background: var(--frost-background-admin);
   border: 1px solid var(--border-color-admin);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--frost-blur-admin));
+  -webkit-backdrop-filter: blur(var(--frost-blur-admin));
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
+
 .data-section h2 {
   margin-top: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 15px;
-  color: #fff; /* White heading */
+  color: var(--light-text-admin);
   font-weight: 600;
 }
 
-.table-container { width: 100%; overflow-x: auto; }
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  color: #eee; /* Light text for table content */
+  color: #e2e8f0;
 }
 
-th, td {
+/* Lighter table text */
+th,
+td {
   padding: 14px 15px;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
 }
 
 th {
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly lighter frost */
+  background-color: rgba(255, 255, 255, 0.08);
   font-weight: 700;
-  color: #fff; /* White header text */
+  color: var(--light-text-admin);
   text-transform: uppercase;
   font-size: 0.85em;
   letter-spacing: 0.5px;
 }
 
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.08); /* Subtle hover */
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
-/* Status Tags */
+/* Status Tags (Consistent with style.css) */
 .status {
-  padding: 5px 12px; border-radius: 20px; font-size: 12px;
-  font-weight: 600; color: white; text-transform: capitalize;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
 }
-.status-submitted { background-color: #f39c12; }
-.status-in-progress { background-color: #3498db; }
-.status-resolved { background-color: #2ecc71; }
 
-/* Action Buttons */
-.action-btn-group { display: flex; gap: 8px; }
-.action-btn {
-  padding: 7px 12px; border: none; border-radius: 5px; cursor: pointer;
-  font-weight: 600; font-size: 12px; color: white; transition: background-color 0.3s;
+.status-submitted {
+  background-color: var(--warning-color);
 }
-.btn-progress { background-color: #f39c12; }
-.btn-progress:hover { background-color: #e67e22; }
-.btn-resolve { background-color: #2ecc71; }
-.btn-resolve:hover { background-color: #27ae60; }
-.btn-disabled { background-color: #95a5a6; cursor: not-allowed; }
+
+.status-in-progress {
+  background-color: var(--info-color);
+}
+
+.status-resolved {
+  background-color: var(--success-color);
+}
+
+/* Action Buttons (Consistent with style.css) */
+.action-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.btn-progress {
+  background-color: var(--warning-color);
+}
+
+.btn-progress:hover {
+  background-color: #d97706;
+}
+
+.btn-resolve {
+  background-color: var(--success-color);
+}
+
+.btn-resolve:hover {
+  background-color: #16a34a;
+}
+
+.btn-disabled {
+  background-color: var(--admin-accent);
+  cursor: not-allowed;
+}
+
+/* Use admin accent for disabled */

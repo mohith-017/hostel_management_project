@@ -1,22 +1,54 @@
 const baseUrl = "http://localhost:5000";
 const findRoomsBtn = document.getElementById("find-rooms-btn");
-const logoutBtn = document.getElementById("logout-btn");
 const viewContainer = document.getElementById("view-container");
+const token = localStorage.getItem('token');
 
 // Initial check for token
-if (!localStorage.getItem('token')) {
+if (!token) {
   window.location.href = 'index.html';
 }
 
-findRoomsBtn.addEventListener("click", fetchAndShowRooms);
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem('token');
-  window.location.href = 'index.html';
-});
+findRoomsBtn?.addEventListener("click", fetchAndShowRooms);
 
+// --- Toast/Popper function (Keep As Is) ---
+function showToast(message, type = 'success') {
+  const toastContainer = document.getElementById('toast-container');
+  if (!toastContainer) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+
+  toastContainer.appendChild(toast);
+
+  setTimeout(() => { toast.classList.add('show'); }, 100);
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 3000);
+}
+// --- End Toast Function ---
+
+
+// --- Fetch and Show Rooms List ---
 async function fetchAndShowRooms() {
-    const block = document.getElementById("block-select").value;
-    const floor = document.getElementById("floor-select").value;
+    const blockSelect = document.getElementById("block-select");
+    const floorSelect = document.getElementById("floor-select");
+
+    if (!blockSelect || !floorSelect || !viewContainer) {
+        console.error("Required elements not found in rooms.html");
+        return;
+    }
+
+    const block = blockSelect.value;
+    const floor = floorSelect.value;
+
+    // Preserve selection for when returning from bed view
+    const currentBlock = blockSelect.value;
+    const currentFloor = floorSelect.value;
+
+    viewContainer.innerHTML = '<p>Loading rooms...</p>';
 
     if (!block || !floor) {
         viewContainer.innerHTML = `<p>Please select a block and a floor to begin.</p>`;
@@ -25,13 +57,16 @@ async function fetchAndShowRooms() {
 
     try {
         const res = await fetch(`${baseUrl}/api/rooms/query?block=${block}&floor=${floor}`);
-        if (!res.ok) throw new Error('Could not fetch rooms.');
-        
+        if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error || 'Could not fetch rooms.');
+        }
+
         const rooms = await res.json();
-        viewContainer.innerHTML = ""; // Clear previous results
+        viewContainer.innerHTML = ""; // Clear
 
         if (rooms.length === 0) {
-            viewContainer.innerHTML = `<p>No rooms found for this selection.</p>`;
+            viewContainer.innerHTML = `<p>No rooms found for Block ${block}, Floor ${floor}.</p>`;
             return;
         }
 
@@ -39,54 +74,99 @@ async function fetchAndShowRooms() {
             const roomBox = document.createElement("div");
             roomBox.className = "room-box";
             roomBox.innerHTML = `<h3>${room.roomNumber}</h3>`;
-            roomBox.addEventListener("click", () => showBedLayout(room));
+             // Pass current selection to showBedLayout if needed later
+            roomBox.onclick = () => showBedLayout(room, currentBlock, currentFloor);
             viewContainer.appendChild(roomBox);
         });
     } catch (error) {
-        viewContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        console.error("Error fetching rooms:", error);
+        viewContainer.innerHTML = `<p style="color: var(--error-color);">Error: ${error.message}</p>`;
     }
 }
 
-function showBedLayout(room) {
-    viewContainer.innerHTML = `<h2>Room: ${room.roomNumber}</h2>`;
-    const bedsContainer = document.createElement("div");
-    bedsContainer.className = "beds-layout";
+// --- Show Bed Layout --- (UPDATED CLASS LOGIC)
+// Added block/floor params to remember selection when going back
+function showBedLayout(room, originalBlock, originalFloor) {
+    if (!viewContainer) return;
+
+    viewContainer.innerHTML = `
+        <div class="bed-layout-box">
+            <h2>Room: ${room.roomNumber}</h2>
+            <div class="beds-layout">
+                </div>
+            <button id="back-to-rooms-btn">← Back to Room List</button>
+        </div>
+    `;
+
+    const bedsLayoutContainer = viewContainer.querySelector(".beds-layout");
+    if (!bedsLayoutContainer) return;
 
     room.beds.forEach(bed => {
-        let bedClasses = "bed-svg";
-        if (bed.occupied) bedClasses += " occupied";
-        else if (bed.isWindowSide) bedClasses += " window-side";
-        else bedClasses += " available";
+        const bedItem = document.createElement("div");
+        // Base class
+        bedItem.className = `bed-item`;
 
-        const bedSVG = `
-            <svg class="${bedClasses}" viewBox="0 0 24 24" onclick="confirmBooking('${room._id}', '${bed.bedNumber}', ${bed.occupied})">
-              <title>Bed ${bed.bedNumber}${bed.occupied ? ` (Occupied by ${bed.occupant?.admissionNo || 'N/A'})` : ''}</title>
-              <path class="bed-fill" d="M19,7H5C3.9,7,3,7.9,3,9v6c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V9C21,7.9,20.1,7,19,7z M7,13.5 c-0.83,0-1.5-0.67-1.5-1.5s0.67-1.5,1.5-1.5S8.5,11.17,8.5,12S7.83,13.5,7,13.5z"/>
-            </svg>
+        // Add status classes based on logic
+        if (bed.occupied) {
+            bedItem.classList.add('occupied');
+        } else {
+            bedItem.classList.add('available'); // It's available
+            if (bed.isWindowSide) {
+                bedItem.classList.add('window-side'); // Add window-side if also available
+            }
+        }
+
+        // Set inner HTML content
+        bedItem.innerHTML = `
+            <p class="bed-number-label">${bed.bedNumber}</p>
+            <p>${bed.isWindowSide ? '(Window Side)' : ''}</p>
+            <p>${bed.occupied ? '(Occupied)' : '(Available)'}</p>
         `;
-        bedsContainer.innerHTML += bedSVG;
+
+        // Add click listener and title
+        if (!bed.occupied) {
+            bedItem.onclick = () => confirmBooking(room._id, bed.bedNumber, false, originalBlock, originalFloor); // Pass block/floor
+            bedItem.title = `Click to book Bed ${bed.bedNumber}`;
+        } else {
+            bedItem.title = `Bed ${bed.bedNumber} is Occupied`;
+        }
+
+        bedsLayoutContainer.appendChild(bedItem);
     });
 
-    viewContainer.appendChild(bedsContainer);
-
-    const backButton = document.createElement("button");
-    backButton.innerText = "← Back to Room List";
-    backButton.onclick = fetchAndShowRooms;
-    viewContainer.appendChild(backButton);
+    const backButton = document.getElementById("back-to-rooms-btn");
+    if(backButton) {
+        // Go back and re-fetch the list for the original selection
+        backButton.onclick = () => {
+             // Optionally re-select the original block/floor in the dropdowns
+             const blockSelect = document.getElementById("block-select");
+             const floorSelect = document.getElementById("floor-select");
+             if(blockSelect) blockSelect.value = originalBlock;
+             if(floorSelect) floorSelect.value = originalFloor;
+             // Then fetch
+             fetchAndShowRooms();
+        }
+    }
 }
 
-function confirmBooking(roomId, bedNumber, isOccupied) {
+
+// --- Confirm and Book Bed --- (UPDATED - pass block/floor)
+function confirmBooking(roomId, bedNumber, isOccupied, block, floor) {
     if (isOccupied) {
-        alert("This bed is already occupied!");
+        showToast("This bed is already occupied!", 'error');
         return;
     }
     if (confirm(`Are you sure you want to book Bed ${bedNumber}?`)) {
-        bookBed(roomId, bedNumber);
+        bookBed(roomId, bedNumber, block, floor); // Pass block/floor
     }
 }
 
-async function bookBed(roomId, bedNumber) {
-    const token = localStorage.getItem('token');
+// --- Book Bed --- (UPDATED - use block/floor on success)
+async function bookBed(roomId, bedNumber, block, floor) {
+    if (!token) {
+        showToast("Authentication error. Please log in again.", 'error');
+        return;
+    }
     try {
         const res = await fetch(`${baseUrl}/api/rooms/book/${roomId}/${bedNumber}`, {
             method: "POST",
@@ -94,116 +174,20 @@ async function bookBed(roomId, bedNumber) {
         });
 
         const data = await res.json();
-        alert(data.message || data.error);
 
         if (res.ok) {
-            fetchAndShowRooms(); // Refresh the view to show the newly booked bed
+            showToast(data.message || `Bed ${bedNumber} booked successfully!`, 'success');
+            // Re-fetch rooms for the original block/floor to show updated status
+             const blockSelect = document.getElementById("block-select");
+             const floorSelect = document.getElementById("floor-select");
+             if(blockSelect) blockSelect.value = block; // Ensure correct selection
+             if(floorSelect) floorSelect.value = floor; // Ensure correct selection
+             fetchAndShowRooms(); // Fetch the list again
+        } else {
+            throw new Error(data.error || 'Booking failed');
         }
     } catch (error) {
-        alert("An error occurred during booking.");
+        console.error("Booking Error:", error);
+        showToast(`Booking Error: ${error.message}`, 'error');
     }
-}
-
-// Change this function in your rooms.js
-// Function to display the bed layout for a selected room
-function showBedLayout(room) {
-    viewContainer.innerHTML = `<h2>Room: ${room.roomNumber}</h2>`;
-    const bedsContainer = document.createElement("div");
-    bedsContainer.className = "beds-layout";
-
-    room.beds.forEach(bed => {
-        let bedClass;
-        if (bed.occupied) {
-            bedClass = 'occupied'; // Grey
-        } else if (bed.isWindowSide) {
-            bedClass = 'window-side'; // Orange
-        } else {
-            bedClass = 'available'; // Green
-        }
-        
-        // ⭐ UPDATED: Added a wrapper div and bed number text
-        const bedItem = document.createElement("div");
-        bedItem.className = "bed-item"; // New class for individual bed container
-
-        // ⭐ UPDATED: New, more detailed SVG for a bed
-        const bedSVG = `
-            <svg class="bed-svg ${bedClass}" viewBox="0 0 200 100" 
-                 onclick="confirmBooking('${room._id}', '${bed.bedNumber}', ${bed.occupied})">
-                <title>${bed.bedNumber}${bed.isWindowSide ? ' (Window Side)' : ''}${bed.occupied ? ` (Occupied by ${bed.occupant?.name || bed.occupant?.admissionNo || 'N/A'})` : ''}</title>
-                
-                <rect x="10" y="10" width="180" height="80" rx="10" ry="10" class="bed-base"/>
-                
-                <rect x="20" y="15" width="40" height="20" rx="5" ry="5" class="bed-pillow"/>
-                <rect x="140" y="15" width="40" height="20" rx="5" ry="5" class="bed-pillow"/>
-                
-                <rect x="15" y="38" width="170" height="47" rx="5" ry="5" class="bed-mattress"/>
-                
-                </svg>
-        `;
-        
-        bedItem.innerHTML = bedSVG + `<p class="bed-number-label">${bed.bedNumber}</p>`;
-        bedsContainer.appendChild(bedItem);
-    });
-
-    viewContainer.appendChild(bedsContainer);
-
-    const backButton = document.createElement("button");
-    backButton.innerText = "← Back to Room List";
-    backButton.onclick = fetchAndShowRooms;
-    viewContainer.appendChild(backButton);
-}
-
-// ... (keep baseUrl, listeners, showToast, fetchAndShowRooms, confirmBooking, bookBed) ...
-
-// Function to display the bed layout for a selected room (UPDATED for Bulma)
-function showBedLayout(room) {
-    // Use columns for layout
-    viewContainer.innerHTML = `
-        <div class="box"> 
-            <h2 class="title is-4">Room: ${room.roomNumber}</h2>
-            <div id="beds-layout-container" class="columns is-multiline is-centered is-variable is-5">
-                </div>
-            <button id="back-to-rooms" class="button is-link is-light mt-4">← Back to Room List</button>
-        </div>
-    `;
-    const bedsContainer = document.getElementById("beds-layout-container");
-
-    room.beds.forEach(bed => {
-        let bedClass;
-        let colorClass = 'is-grey-lighter'; // Occupied
-        if (bed.occupied) {
-            bedClass = 'occupied';
-        } else if (bed.isWindowSide) {
-            bedClass = 'window-side'; 
-            colorClass = 'is-warning'; // Window-side available
-        } else {
-            bedClass = 'available';
-            colorClass = 'is-success'; // Normal available
-        }
-        
-        // Create a column for each bed
-        const bedColumn = document.createElement("div");
-        bedColumn.className = "column is-one-quarter-desktop is-half-tablet has-text-centered bed-item"; // Bulma column classes
-
-        // Simplified: Using Bulma buttons or tags for beds
-        const bedButton = document.createElement("div");
-        bedButton.className = `box bed-box ${bedClass} has-background-${colorClass.split('-')[1]}-light`; // Use light background variant
-        bedButton.style.cursor = bed.occupied ? 'not-allowed' : 'pointer';
-        bedButton.innerHTML = `
-            <span class="icon is-large"><i class="fas fa-bed fa-2x"></i></span>
-            <p class="is-size-5 has-text-weight-bold bed-number-label">${bed.bedNumber}</p>
-            <p class="is-size-7">${bed.isWindowSide ? '(Window)' : ''} ${bed.occupied ? `(Occupied)` : '(Available)'}</p>
-        `;
-
-        if (!bed.occupied) {
-             bedButton.onclick = () => confirmBooking(room._id, bed.bedNumber, bed.occupied);
-        } else {
-            bedButton.title = `Occupied by ${bed.occupant?.name || bed.occupant?.admissionNo || 'N/A'}`;
-        }
-        
-        bedColumn.appendChild(bedButton);
-        bedsContainer.appendChild(bedColumn);
-    });
-
-    document.getElementById("back-to-rooms").onclick = fetchAndShowRooms;
 }

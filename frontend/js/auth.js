@@ -1,211 +1,195 @@
 const baseUrl = "http://localhost:5000";
 
 document.addEventListener('DOMContentLoaded', () => {
-  const signupRole = document.getElementById('signup-role');
-  if (signupRole) {
-    signupRole.addEventListener('change', handleRoleChange);
+  // Add listener only if the element exists (prevents errors on other pages)
+  const signupRoleSelect = document.getElementById('signup-role');
+  if (signupRoleSelect) {
+    signupRoleSelect.addEventListener('change', handleRoleChange);
+    // Initial call to set the correct fields visibility on page load
+    handleRoleChange();
   }
 });
 
 function handleRoleChange() {
-  const role = document.getElementById('signup-role').value;
+  // Ensure elements exist before trying to access them
+  const roleSelect = document.getElementById('signup-role');
   const studentFields = document.getElementById('student-fields');
   const adminFields = document.getElementById('admin-fields');
 
+  if (!roleSelect || !studentFields || !adminFields) return; // Exit if elements aren't found
+
+  const role = roleSelect.value;
+
   if (role === 'student') {
-    studentFields.classList.remove('hidden');
-    adminFields.classList.add('hidden');
+    studentFields.classList.remove('hidden'); // Use custom 'hidden' class
+    adminFields.classList.add('hidden');     // Use custom 'hidden' class
   } else {
-    studentFields.classList.add('hidden');
-    adminFields.classList.remove('hidden');
+    studentFields.classList.add('hidden');     // Use custom 'hidden' class
+    adminFields.classList.remove('hidden'); // Use custom 'hidden' class
   }
 }
 
 function toggleForm() {
-  document.getElementById("login-section").classList.toggle("hidden");
-  document.getElementById("signup-section").classList.toggle("hidden");
-  document.getElementById("message").innerText = "";
-  handleRoleChange(); // Ensure correct fields are shown on toggle
+  const loginSection = document.getElementById("login-section");
+  const signupSection = document.getElementById("signup-section");
+  const messageEl = document.getElementById("message");
+
+  if (loginSection && signupSection) {
+      loginSection.classList.toggle("hidden"); // Use custom 'hidden' class
+      signupSection.classList.toggle("hidden");// Use custom 'hidden' class
+  }
+  if (messageEl) {
+      messageEl.textContent = '';        // Clear message text
+      messageEl.className = '';          // Clear message classes (like success/error)
+      messageEl.style.display = 'none'; // Ensure it's hidden
+  }
+  handleRoleChange(); // Update field visibility when toggling
 }
 
+// Corrected signup function - gathers all fields
 async function signup() {
-  const name = document.getElementById('signup-name').value.trim();
-  const admissionNo = document.getElementById('signup-id').value.trim();
-  const role = document.getElementById('signup-role').value;
-  const password = document.getElementById('signup-password').value.trim();
-  const confirm = document.getElementById('signup-confirm').value.trim();
-  
+  // Ensure all elements exist before getting values
+  const nameInput = document.getElementById('signup-name');
+  const admissionNoInput = document.getElementById('signup-id');
+  const roleSelect = document.getElementById('signup-role');
+  const passwordInput = document.getElementById('signup-password');
+  const confirmInput = document.getElementById('signup-confirm');
+  const semesterInput = document.getElementById('signup-semester');
+  const studentPhoneInput = document.getElementById('signup-student-phone');
+  const parentNameInput = document.getElementById('signup-parent-name');
+  const parentPhoneInput = document.getElementById('signup-parent-phone');
+  const addressInput = document.getElementById('signup-address');
+  const postInput = document.getElementById('signup-post');
+
+  if (!nameInput || !admissionNoInput || !roleSelect || !passwordInput || !confirmInput) {
+      showMessage("Form elements missing. Please check HTML.", 'error');
+      return;
+  }
+
+  const name = nameInput.value.trim();
+  const admissionNo = admissionNoInput.value.trim();
+  const role = roleSelect.value;
+  const password = passwordInput.value.trim();
+  const confirm = confirmInput.value.trim();
+
+  // Basic validation
+  if (!name || !admissionNo || !role || !password || !confirm) {
+       return showMessage("Please fill all required fields.", 'error');
+  }
+  if (password !== confirm) return showMessage("Passwords do not match!", 'error');
+
   const userData = { name, admissionNo, role, password };
 
   if (role === 'student') {
-    userData.semester = document.getElementById('signup-semester').value.trim();
-  } else {
-    userData.post = document.getElementById('signup-post').value.trim();
+    if (!semesterInput || !studentPhoneInput || !parentNameInput || !parentPhoneInput || !addressInput) {
+        showMessage("Student specific form elements missing.", 'error'); return;
+    }
+    userData.semester = semesterInput.value.trim();
+    userData.studentPhone = studentPhoneInput.value.trim();
+    userData.parentName = parentNameInput.value.trim();
+    userData.parentPhone = parentPhoneInput.value.trim();
+    userData.address = addressInput.value.trim();
+     // Add validation for student fields if needed
+     if (!userData.semester || !userData.studentPhone || !userData.parentName || !userData.parentPhone || !userData.address) {
+          return showMessage("Please fill all student details.", 'error');
+     }
+  } else { // role === 'admin'
+    if (!postInput) {
+         showMessage("Admin specific form elements missing.", 'error'); return;
+    }
+    userData.post = postInput.value.trim();
+     // Add validation for admin fields if needed
+     if (!userData.post) {
+          return showMessage("Please fill the admin post field.", 'error');
+     }
   }
 
-  if (password !== confirm) return showMessage("Passwords do not match!");
 
   try {
+    const signupButton = document.querySelector('#signup-section button');
+    if(signupButton) signupButton.disabled = true; // Disable button during request
+
     const res = await fetch(`${baseUrl}/api/users/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Registration failed");
-    
+    if (!res.ok) {
+        // Use backend error message if available
+        throw new Error(data.error || `Registration failed (${res.status})`);
+    }
+
     showMessage('Registration successful! Please log in.', 'success');
-    toggleForm();
+    toggleForm(); // Switch back to login form
   } catch (error) {
-    showMessage(error.message);
+    showMessage(error.message || "An unexpected error occurred.", 'error');
+  } finally {
+      const signupButton = document.querySelector('#signup-section button');
+      if(signupButton) signupButton.disabled = false; // Re-enable button
   }
 }
 
+// Corrected login function - redirects admin correctly
 async function login() {
-  const admissionNo = document.getElementById('login-id').value.trim();
-  const role = document.getElementById('login-role').value;
-  const password = document.getElementById('login-password').value.trim();
+  const admissionNoInput = document.getElementById('login-id');
+  const roleSelect = document.getElementById('login-role');
+  const passwordInput = document.getElementById('login-password');
+
+  if (!admissionNoInput || !roleSelect || !passwordInput) {
+      showMessage("Login form elements missing. Please check HTML.", 'error');
+      return;
+  }
+
+  const admissionNo = admissionNoInput.value.trim();
+  const role = roleSelect.value;
+  const password = passwordInput.value.trim();
+
+  if (!admissionNo || !password) {
+      return showMessage("User ID and Password are required.", 'error');
+  }
 
   try {
+     const loginButton = document.querySelector('#login-section button');
+     if(loginButton) loginButton.disabled = true; // Disable button
+
     const res = await fetch(`${baseUrl}/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ admissionNo, role, password }),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Login failed");
+    if (!res.ok) {
+        throw new Error(data.error || `Login failed (${res.status})`);
+    }
 
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
 
-    // --- (UPDATED) ---
-    // Redirect based on role
+    // Redirect admin to admin-dashboard, student to dashboard
     if (data.user.role === 'student') {
       window.location.href = 'dashboard.html';
+    } else if (data.user.role === 'admin') {
+      window.location.href = 'admin-dashboard.html';
     } else {
-      window.location.href = 'rooms.html'; // Admin can still see the rooms for now
-    }
-    // --- (END OF UPDATE) ---
-
-  } catch (error) {
-    showMessage(error.message);
-  }
-}
-
-function showMessage(msg, type = 'error') {
-  const messageEl = document.getElementById('message');
-  messageEl.textContent = msg;
-  messageEl.style.color = type === 'success' ? '#2ecc71' : '#e74c3c';
-}
-
-// ... (keep handleRoleChange, toggleForm, and showMessage) ...
-
-async function signup() {
-  const name = document.getElementById('signup-name').value.trim();
-  const admissionNo = document.getElementById('signup-id').value.trim();
-  const role = document.getElementById('signup-role').value;
-  const password = document.getElementById('signup-password').value.trim();
-  const confirm = document.getElementById('signup-confirm').value.trim();
-  
-  // (UPDATED) Get all new fields
-  const userData = { name, admissionNo, role, password };
-
-  if (role === 'student') {
-    userData.semester = document.getElementById('signup-semester').value.trim();
-    userData.studentPhone = document.getElementById('signup-student-phone').value.trim();
-    userData.parentName = document.getElementById('signup-parent-name').value.trim();
-    userData.parentPhone = document.getElementById('signup-parent-phone').value.trim();
-    userData.address = document.getElementById('signup-address').value.trim();
-  } else {
-    userData.post = document.getElementById('signup-post').value.trim();
-  }
-
-  if (password !== confirm) return showMessage("Passwords do not match!");
-
-  try {
-    const res = await fetch(`${baseUrl}/api/users/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData), // (Body now includes all new data)
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Registration failed");
-    
-    showMessage('Registration successful! Please log in.', 'success');
-    toggleForm();
-  } catch (error) {
-    showMessage(error.message);
-  }
-}
-
-async function login() {
-  const admissionNo = document.getElementById('login-id').value.trim();
-  const role = document.getElementById('login-role').value;
-  const password = document.getElementById('login-password').value.trim();
-
-  try {
-    const res = await fetch(`${baseUrl}/api/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ admissionNo, role, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Login failed");
-
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
-
-    // (UPDATED) Redirect admin to new dashboard
-    if (data.user.role === 'student') {
-      window.location.href = 'dashboard.html';
-    } else {
-      window.location.href = 'admin-dashboard.html'; // (NEW)
+        // Fallback or error if role is unexpected
+        showMessage("Logged in with unknown role.", 'error');
     }
 
   } catch (error) {
-    showMessage(error.message);
+    showMessage(error.message || "An unexpected error occurred during login.", 'error');
+     const loginButton = document.querySelector('#login-section button');
+     if(loginButton) loginButton.disabled = false; // Re-enable button on error
   }
 }
 
-// ... (keep baseUrl, event listener) ...
-
-function handleRoleChange() {
-  const role = document.getElementById('signup-role').value;
-  const studentFields = document.getElementById('student-fields');
-  const adminFields = document.getElementById('admin-fields');
-
-  if (role === 'student') {
-    studentFields.classList.remove('is-hidden'); // Use Bulma class
-    adminFields.classList.add('is-hidden');     // Use Bulma class
-  } else {
-    studentFields.classList.add('is-hidden');     // Use Bulma class
-    adminFields.classList.remove('is-hidden'); // Use Bulma class
-  }
-}
-
-function toggleForm() {
-  document.getElementById("login-section").classList.toggle("is-hidden"); // Use Bulma class
-  document.getElementById("signup-section").classList.toggle("is-hidden");// Use Bulma class
-  // Clear message
-  const messageEl = document.getElementById('message');
-  messageEl.textContent = '';
-  messageEl.className = 'notification mt-4'; // Reset classes
-  handleRoleChange(); 
-}
-
-// ... (keep signup function) ...
-// ... (keep login function) ...
-
+// Corrected showMessage function - uses classes for frosted style
 function showMessage(msg, type = 'error') {
   const messageEl = document.getElementById('message');
-  messageEl.textContent = msg;
-  // Use Bulma notification classes
-  messageEl.className = `notification mt-4 ${type === 'success' ? 'is-success' : 'is-danger'}`;
-}
+  if (!messageEl) return; // Exit if message element doesn't exist
 
-function showMessage(msg, type = 'error') {
-  const messageEl = document.getElementById('message');
   messageEl.textContent = msg;
-  // Use custom classes for styling
-  messageEl.className = ` ${type}`; // Add 'success' or 'error' class
+  // Use custom classes for styling matching style.css
+  messageEl.className = type; // Adds 'success' or 'error' class
+  messageEl.style.display = 'block'; // Make it visible
 }
