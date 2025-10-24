@@ -33,6 +33,7 @@ body {
   font-weight: 600;
   transition: color 0.3s;
 }
+
 .nav-link:hover {
   color: #3498db;
 }
@@ -48,6 +49,7 @@ body {
   font-size: 15px;
   transition: background-color 0.3s;
 }
+
 .logout-button:hover {
   background: #c0392b;
 }
@@ -73,20 +75,31 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   border-left: 5px solid #ccc;
 }
+
 .stat-card h2 {
   margin-top: 0;
   font-size: 18px;
   color: #555;
 }
+
 .stat-card p {
   margin: 0;
   font-size: 36px;
   font-weight: 700;
   color: #2c3e50;
 }
-.stat-card.complaints { border-color: #f39c12; }
-.stat-card.fees { border-color: #e74c3c; }
-.stat-card.students { border-color: #3498db; }
+
+.stat-card.complaints {
+  border-color: #f39c12;
+}
+
+.stat-card.fees {
+  border-color: #e74c3c;
+}
+
+.stat-card.students {
+  border-color: #3498db;
+}
 
 /* Data Tables */
 .data-section {
@@ -96,6 +109,7 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
 }
+
 .data-section h2 {
   margin-top: 0;
   border-bottom: 2px solid #eee;
@@ -114,7 +128,8 @@ table {
   margin-top: 20px;
 }
 
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -140,9 +155,18 @@ tbody tr:hover {
   color: white;
   text-transform: capitalize;
 }
-.status-submitted { background-color: #f39c12; }
-.status-in-progress { background-color: #3498db; }
-.status-resolved { background-color: #2ecc71; }
+
+.status-submitted {
+  background-color: #f39c12;
+}
+
+.status-in-progress {
+  background-color: #3498db;
+}
+
+.status-resolved {
+  background-color: #2ecc71;
+}
 
 .action-select {
   padding: 8px;
@@ -171,15 +195,19 @@ tbody tr:hover {
 
 /* This is the red-ish button you wanted */
 .btn-progress {
-  background-color: #f39c12; /* Orange/Yellow */
+  background-color: #f39c12;
+  /* Orange/Yellow */
 }
+
 .btn-progress:hover {
   background-color: #e67e22;
 }
 
 .btn-resolve {
-  background-color: #2ecc71; /* Green */
+  background-color: #2ecc71;
+  /* Green */
 }
+
 .btn-resolve:hover {
   background-color: #27ae60;
 }
@@ -187,4 +215,9 @@ tbody tr:hover {
 .btn-disabled {
   background-color: #95a5a6;
   cursor: not-allowed;
+}
+
+.table td,
+.table th {
+  padding: 0.8em 0.75em;
 }

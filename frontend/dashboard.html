@@ -3,59 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <title>Student Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Your Page Title</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- <link rel="stylesheet" href="css/style.css" /> 
+   <link rel="stylesheet" href="css/admin.css" />  -->
 </head>
 <body>
-
-  <header class="header">
-    <h1 id="welcome-message">Welcome, Student!</h1>
-    <button id="logout-btn" class="logout-button">Logout</button>
-  </header>
-
-  <main class="dashboard-container">
-    <div class="dashboard-grid">
-      
-      <a href="rooms.html" class="dashboard-card">
-        <h3>Book/View Room</h3>
-        <p>Check room availability and book your bed.</p>
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+         <strong id="welcome-message">Welcome, Student!</strong>
       </a>
-
-      <a href="fees.html" class="dashboard-card">
-        <h3>Pay Fees</h3>
-        <p>Check your fee status and pay outstanding dues.</p>
-      </a>
-
-      <a href="complaints.html" class="dashboard-card">
-        <h3>Lodge Complaint</h3>
-        <p>Submit a complaint about hostel facilities.</p>
-      </a>
-
     </div>
-
-    <div class="info-section">
-      <h2>Hostel Information</h2>
-      
-      <div class="info-card">
-        <h3>Contact Details</h3>
-        <p><strong>Chief Warden:</strong> Dr. A. K. Singh</p>
-        <p><strong>Phone:</strong> +91 98765 43210</p>
-        <p><strong>Email:</strong> warden@sjbit.edu.in</p>
-        <p><strong>Office:</strong> Block A, Ground Floor</p>
-      </div>
-
-      <div class="info-card">
-        <h3>Hostel Gallery</h3>
-        <div class="gallery">
-          <img src="images/hostel1.jpg" alt="Hostel Room">
-          <img src="images/hostel2.jpg" alt="Hostel Mess">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <button id="logout-btn" class="button is-danger">Logout</button>
         </div>
       </div>
     </div>
-  </main>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      
+      <div class="columns is-multiline is-centered">
+         <div class="column is-one-third">
+            <a href="rooms.html" class="card dashboard-card-link">
+              <div class="card-content has-text-centered">
+                  <p class="title is-4">Book/View Room</p>
+                  <p class="subtitle is-6">Check availability and book your bed.</p>
+                  <span class="icon is-large has-text-info"> <i class="fas fa-bed fa-3x"></i></span>
+              </div>
+            </a>
+         </div>
+         <div class="column is-one-third">
+            <a href="fees.html" class="card dashboard-card-link">
+              <div class="card-content has-text-centered">
+                  <p class="title is-4">Pay Fees</p>
+                  <p class="subtitle is-6">Check status and pay outstanding dues.</p>
+                   <span class="icon is-large has-text-success"> <i class="fas fa-money-check-alt fa-3x"></i></span>
+              </div>
+            </a>
+         </div>
+         <div class="column is-one-third">
+            <a href="complaints.html" class="card dashboard-card-link">
+              <div class="card-content has-text-centered">
+                  <p class="title is-4">Lodge Complaint</p>
+                  <p class="subtitle is-6">Submit a complaint about facilities.</p>
+                   <span class="icon is-large has-text-warning"> <i class="fas fa-tools fa-3x"></i></span>
+              </div>
+            </a>
+         </div>
+      </div>
+
+      <div class="columns is-centered mt-5">
+           <div class="column is-half">
+               <div id="my-room-section" class="box has-background-info-light">
+                   <h2 class="title is-5 has-text-info-dark">My Room Details</h2>
+                   <div id="room-details-content" class="content">
+                       <p>Loading your room details...</p>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+      <div class="columns is-centered mt-5">
+        <div class="column is-two-thirds">
+          <div class="box">
+             <h2 class="title is-4">Hostel Information</h2>
+             <div class="columns">
+                 <div class="column">
+                     <h3 class="title is-5">Contact Details</h3>
+                     <div class="content">
+                         <p><strong>Chief Warden:</strong> Dr. A. K. Singh</p>
+                         <p><strong>Phone:</strong> +91 98765 43210</p>
+                         <p><strong>Email:</strong> warden@sjbit.edu.in</p>
+                         <p><strong>Office:</strong> Block A, Ground Floor</p>
+                     </div>
+                 </div>
+                 <div class="column">
+                     <h3 class="title is-5">Hostel Gallery</h3>
+                     <div class="gallery columns is-multiline is-mobile">
+                         <div class="column is-half"><img src="images/hostel1.jpg" alt="Hostel Room"></div>
+                         <div class="column is-half"><img src="images/hostel2.jpg" alt="Hostel Mess"></div>
+                     </div>
+                 </div>
+             </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
 
   <script src="js/dashboard.js"></script>
 </body>

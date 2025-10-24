@@ -152,3 +152,58 @@ function showBedLayout(room) {
     backButton.onclick = fetchAndShowRooms;
     viewContainer.appendChild(backButton);
 }
+
+// ... (keep baseUrl, listeners, showToast, fetchAndShowRooms, confirmBooking, bookBed) ...
+
+// Function to display the bed layout for a selected room (UPDATED for Bulma)
+function showBedLayout(room) {
+    // Use columns for layout
+    viewContainer.innerHTML = `
+        <div class="box"> 
+            <h2 class="title is-4">Room: ${room.roomNumber}</h2>
+            <div id="beds-layout-container" class="columns is-multiline is-centered is-variable is-5">
+                </div>
+            <button id="back-to-rooms" class="button is-link is-light mt-4">← Back to Room List</button>
+        </div>
+    `;
+    const bedsContainer = document.getElementById("beds-layout-container");
+
+    room.beds.forEach(bed => {
+        let bedClass;
+        let colorClass = 'is-grey-lighter'; // Occupied
+        if (bed.occupied) {
+            bedClass = 'occupied';
+        } else if (bed.isWindowSide) {
+            bedClass = 'window-side'; 
+            colorClass = 'is-warning'; // Window-side available
+        } else {
+            bedClass = 'available';
+            colorClass = 'is-success'; // Normal available
+        }
+        
+        // Create a column for each bed
+        const bedColumn = document.createElement("div");
+        bedColumn.className = "column is-one-quarter-desktop is-half-tablet has-text-centered bed-item"; // Bulma column classes
+
+        // Simplified: Using Bulma buttons or tags for beds
+        const bedButton = document.createElement("div");
+        bedButton.className = `box bed-box ${bedClass} has-background-${colorClass.split('-')[1]}-light`; // Use light background variant
+        bedButton.style.cursor = bed.occupied ? 'not-allowed' : 'pointer';
+        bedButton.innerHTML = `
+            <span class="icon is-large"><i class="fas fa-bed fa-2x"></i></span>
+            <p class="is-size-5 has-text-weight-bold bed-number-label">${bed.bedNumber}</p>
+            <p class="is-size-7">${bed.isWindowSide ? '(Window)' : ''} ${bed.occupied ? `(Occupied)` : '(Available)'}</p>
+        `;
+
+        if (!bed.occupied) {
+             bedButton.onclick = () => confirmBooking(room._id, bed.bedNumber, bed.occupied);
+        } else {
+            bedButton.title = `Occupied by ${bed.occupant?.name || bed.occupant?.admissionNo || 'N/A'}`;
+        }
+        
+        bedColumn.appendChild(bedButton);
+        bedsContainer.appendChild(bedColumn);
+    });
+
+    document.getElementById("back-to-rooms").onclick = fetchAndShowRooms;
+}

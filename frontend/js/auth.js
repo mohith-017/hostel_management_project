@@ -166,3 +166,39 @@ async function login() {
     showMessage(error.message);
   }
 }
+
+// ... (keep baseUrl, event listener) ...
+
+function handleRoleChange() {
+  const role = document.getElementById('signup-role').value;
+  const studentFields = document.getElementById('student-fields');
+  const adminFields = document.getElementById('admin-fields');
+
+  if (role === 'student') {
+    studentFields.classList.remove('is-hidden'); // Use Bulma class
+    adminFields.classList.add('is-hidden');     // Use Bulma class
+  } else {
+    studentFields.classList.add('is-hidden');     // Use Bulma class
+    adminFields.classList.remove('is-hidden'); // Use Bulma class
+  }
+}
+
+function toggleForm() {
+  document.getElementById("login-section").classList.toggle("is-hidden"); // Use Bulma class
+  document.getElementById("signup-section").classList.toggle("is-hidden");// Use Bulma class
+  // Clear message
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = '';
+  messageEl.className = 'notification mt-4'; // Reset classes
+  handleRoleChange(); 
+}
+
+// ... (keep signup function) ...
+// ... (keep login function) ...
+
+function showMessage(msg, type = 'error') {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = msg;
+  // Use Bulma notification classes
+  messageEl.className = `notification mt-4 ${type === 'success' ? 'is-success' : 'is-danger'}`;
+}

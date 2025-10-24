@@ -364,6 +364,7 @@ button:disabled {
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  margin-bottom: 30px;
 }
 
 .info-section h2 {
@@ -534,3 +535,88 @@ button:disabled {
   max-height: 80vh;
   overflow-y: auto;
 }
+
+/* --- (NEW) My Room Details Section --- */
+#my-room-section {
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  /* Light blue gradient */
+  border: 1px solid #7dd3fc;
+  /* Sky blue border */
+}
+
+#my-room-section h2 {
+  color: #0c4a6e;
+  /* Darker blue */
+  border-bottom: 2px solid #38bdf8;
+  /* Brighter blue */
+}
+
+#room-details-content p {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+#room-details-content strong {
+  color: #075985;
+  /* Even darker blue */
+}
+
+#room-details-content .room-highlight {
+  font-weight: 700;
+  font-size: 20px;
+  color: #0369a1;
+}
+
+#room-details-content .no-room-message {
+  font-style: italic;
+  color: #555;
+}
+
+/* Keep only custom styles Bulma doesn't handle */
+
+/* Example: Keep Toast styles */
+#toast-container {
+  position: fixed; /* Use Bulma 'is-fixed-top-right' or keep custom */
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+/* ... (rest of toast styles) ... */
+
+/* Example: Keep Bed SVG styles IF you didn't switch to Bulma boxes/icons */
+/*
+.beds-layout { ... }
+.bed-item { ... }
+.bed-svg { ... }
+.bed-base { ... }
+... etc ...
+*/
+
+/* Example: Keep specific dashboard card link style if needed */
+.dashboard-card-link {
+    display: block; /* Make the whole card clickable */
+    height: 100%;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.dashboard-card-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Add custom adjustments as needed */
+.gallery img {
+  border-radius: 4px; /* Bulma uses 4px */
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+}
+
+/* Adjustments for room booking boxes/icons if used */
+.bed-box {
+    padding: 1rem;
+    border-radius: 6px;
+}
+.bed-box .icon { margin-bottom: 0.5rem; }
+.bed-box p { margin-bottom: 0.25rem; }

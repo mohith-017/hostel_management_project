@@ -194,3 +194,68 @@ async function updateComplaintStatus(id, newStatus) {
     alert("Failed to update status.");
   }
 }
+
+// ... (keep top part, fetchApi, fetchStats) ...
+
+// 2. Fetch Complaints (UPDATED for Bulma tags)
+async function fetchComplaints() {
+  try {
+    const complaints = await fetchApi('/complaints');
+    const tableBody = document.getElementById('complaints-table').querySelector('tbody');
+    tableBody.innerHTML = ''; 
+    
+    if (complaints.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="6">No pending complaints found!</td></tr>';
+      return;
+    }
+
+    complaints.forEach(c => {
+      const row = tableBody.insertRow();
+      
+      // Bulma tag classes based on status
+      let statusClass = 'is-warning'; // Submitted
+      if (c.status === 'In Progress') statusClass = 'is-info';
+      if (c.status === 'Resolved') statusClass = 'is-success';
+
+      let actionButtons = '';
+      if (c.status === 'Submitted') {
+        actionButtons = `
+          <button class="button is-small is-warning action-btn" data-id="${c._id}" data-status="In Progress">Start</button>
+          <button class="button is-small is-success action-btn" data-id="${c._id}" data-status="Resolved">Resolve</button>
+        `;
+      } else if (c.status === 'In Progress') {
+        actionButtons = `
+          <button class="button is-small is-success action-btn" data-id="${c._id}" data-status="Resolved">Resolve</button>
+        `;
+      } else {
+        actionButtons = `<span class="tag is-success">Resolved</span>`; // Show tag if resolved
+      }
+
+      row.innerHTML = `
+        <td>${c.student?.name || 'N/A'}</td>
+        <td>${c.student?.admissionNo || 'N/A'}</td>
+        <td>${c.category}</td>
+        <td>${c.description}</td>
+        <td>
+          <span class="tag ${statusClass}">${c.status}</span> 
+        </td>
+        <td>
+          <div class="buttons are-small">${actionButtons}</div> 
+        </td>
+      `;
+    });
+
+    // Add event listeners
+    document.querySelectorAll('.action-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        const newStatus = e.target.dataset.status;
+        updateComplaintStatus(id, newStatus);
+      });
+    });
+
+  } catch (error) {
+    console.error(error);
+    document.getElementById('complaints-table').querySelector('tbody').innerHTML = '<tr><td colspan="6">Error loading complaints.</td></tr>';
+  }
+}
