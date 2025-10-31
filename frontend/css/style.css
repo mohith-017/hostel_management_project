@@ -52,6 +52,8 @@ body {
 }
 
 /* --- Login Page (index.html) --- */
+
+/* (MODIFIED) - This now just centers the main container */
 .login-page-wrapper {
   display: flex;
   justify-content: center;
@@ -60,10 +62,63 @@ body {
   padding: 20px;
 }
 
-.auth-box {
-  max-width: 400px;
+/* (NEW) - This is the new 2-column container */
+.login-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 900px; /* Increased max-width for 2 cols */
   width: 100%;
+  padding: 0; /* Remove padding, will add to children */
+  overflow: hidden; /* Keep rounded corners on children */
 }
+
+/* (NEW) - Column 1: Image Styling */
+.login-image-container {
+  flex-basis: 50%; /* Takes up half the space */
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  color: var(--primary-color);
+  /* A subtle background for the image side */
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-image-container img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 91px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.login-image-container h2 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+.login-image-container p {
+  font-size: 16px;
+  color: #334155;
+}
+
+
+/* (MODIFIED) - This is now Column 2 */
+.auth-box {
+  flex-basis: 50%; /* Takes up the other half */
+  /* Remove frost styles, they are on .login-container now */
+  /* Remove max-width, flex-basis is handling it */
+  max-width: none;
+  width: auto;
+  box-sizing: border-box;
+  padding: 30px 40px; /* Add padding back */
+}
+
 
 .form-section {
   text-align: center;
@@ -713,4 +768,23 @@ textarea:focus {
 
 .toast.toast-error {
   border-left-color: var(--error-color);
+}
+
+/* (NEW) - Add media query for responsiveness on login page */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 450px; /* Let it be taller, not wider */
+  }
+
+  /* Hide image on small screens to save space */
+  .login-image-container {
+    display: none; 
+  }
+  
+  .auth-box {
+    flex-basis: 100%;
+    /* Remove padding override if any */
+    padding: 30px 40px;
+  }
 }

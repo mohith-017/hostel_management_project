@@ -4,42 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SJBIT Hostel Portal</title>
-    <link rel="stylesheet" href="css/style.css" /> </head>
+    
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css" /> 
+</head>
 <body>
-    <div class="login-page-wrapper"> <div id="auth-box" class="auth-box frost-container"> <div id="login-section" class="form-section">
-                <h2>Hostel Login</h2>
-                <input type="text" id="login-id" placeholder="User ID (e.g., Admission No.)" />
-                <select id="login-role">
-                    <option value="student">Login as Student</option>
-                    <option value="admin">Login as Admin</option>
-                </select>
-                <input type="password" id="login-password" placeholder="Password" />
-                <button onclick="login()">Login</button>
-                <p>New here? <a href="#" onclick="toggleForm()">Create an Account</a></p>
+    <div class="login-page-wrapper">
+        
+        <div class="login-container frost-container">
+            
+            <div class="login-image-container">
+                <img src="logo.png" alt="Hostel Building" />
+                <h2>Welcome to SJBIT Hostel</h2>
+                <p>Your home away from home.</p>
             </div>
 
-            <div id="signup-section" class="form-section hidden"> <h2>Create Account</h2>
-                <input type="text" id="signup-name" placeholder="Full Name" />
-                <input type="text" id="signup-id" placeholder="User ID (e.g., Admission No.)" />
-                <select id="signup-role" onchange="handleRoleChange()"> <option value="student">I am a Student</option>
-                    <option value="admin">I am an Admin</option>
-                </select>
-                <div id="student-fields">
-                    <input type="text" id="signup-semester" placeholder="Semester (e.g., 5th)" />
-                    <input type="text" id="signup-student-phone" placeholder="Your Phone Number" />
-                    <input type="text" id="signup-parent-name" placeholder="Parent's Name" />
-                    <input type="text" id="signup-parent-phone" placeholder="Parent's Phone Number" />
-                    <input type="text" id="signup-address" placeholder="Home Address" />
+            <div id="auth-box" class="auth-box"> 
+                
+                <div id="login-section" class="form-section">
+                    <h2>Hostel Login</h2>
+                    <input type="text" id="login-id" placeholder="User ID (e.g., Admission No.)" />
+                    <select id="login-role">
+                        <option value="student">Login as Student</option>
+                        <option value="admin">Login as Admin</option>
+                    </select>
+                    <input type="password" id="login-password" placeholder="Password" />
+                    <button onclick="login()">Login</button>
+                    <p>New here? <a href="#" onclick="toggleForm()">Create an Account</a></p>
                 </div>
-                <div id="admin-fields" class="hidden"> <input type="text" id="signup-post" placeholder="Admin Post (e.g., Warden)" />
-                </div>
-                <input type="password" id="signup-password" placeholder="Create Password" />
-                <input type="password" id="signup-confirm" placeholder="Confirm Password" />
-                <button onclick="signup()">Register</button>
-                <p>Already a member? <a href="#" onclick="toggleForm()">Login Instead</a></p>
-            </div>
 
-            <p id="message"></p> </div>
+                <div id="signup-section" class="form-section hidden"> 
+                    <h2>Create Account</h2>
+                    <input type="text" id="signup-name" placeholder="Full Name" />
+                    <input type="text" id="signup-id" placeholder="User ID (e.g., Admission No.)" />
+                    <select id="signup-role" onchange="handleRoleChange()"> 
+                        <option value="student">I am a Student</option>
+                        <option value="admin">I am an Admin</option>
+                    </select>
+                    <div id="student-fields">
+                        <input type="text" id="signup-semester" placeholder="Semester (e.g., 5th)" />
+                        <input type="text" id="signup-student-phone" placeholder="Your Phone Number" />
+                        <input type="text" id="signup-parent-name" placeholder="Parent's Name" />
+                        <input type="text" id="signup-parent-phone" placeholder="Parent's Phone Number" />
+                        <input type="text" id="signup-address" placeholder="Home Address" />
+                    </div>
+                    <div id="admin-fields" class="hidden"> 
+                        <input type="text" id="signup-post" placeholder="Admin Post (e.g., Warden)" />
+                    </div>
+                    <input type="password" id="signup-password" placeholder="Create Password" />
+                    <input type="password" id="signup-confirm" placeholder="Confirm Password" />
+                    <button onclick="signup()">Register</button>
+                    <p>Already a member? <a href="#" onclick="toggleForm()">Login Instead</a></p>
+                </div>
+
+                <p id="message"></p> 
+            </div>
+        </div>
     </div>
     <script src="js/auth.js"></script>
 </body>
