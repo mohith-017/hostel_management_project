@@ -728,6 +728,58 @@ textarea:focus {
   background-color: var(--success-color);
 }
 
+/* --- (MODIFIED) Profile Page Form Grid --- */
+#profile-box .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: left;
+}
+
+/* (MODIFIED) This rule applies your requested styles ONLY to inputs */
+#profile-box .form-group input {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box; /* Ensure padding/border are included in height */
+  
+  /* User's requested styles */
+  height: 35px;
+  border-radius: 8px;
+  border-color: rgb(224, 247, 255);
+  background-color: rgb(224, 247, 255);
+  
+  /* Override global padding to fit new height */
+  padding: 5px 14px; 
+}
+
+/* (MODIFIED) This rule now ONLY targets the textarea */
+#profile-box .form-group textarea {
+  width: 100%;
+  margin: 0; /* Remove margin from global input styles */
+  /* Keeps the original frosted glass style for the textarea */
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+  gap: 25px 20px; /* Vertical and horizontal gap */
+  margin-bottom: 20px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1; /* Make this group span both columns */
+}
+
+/* Responsive layout for profile form */
+@media (max-width: 600px) {
+  .profile-form-grid {
+    grid-template-columns: 1fr; /* Stack into a single column on small screens */
+    gap: 20px;
+  }
+}
+
+
 /* --- Toast Notification --- */
 #toast-container {
   position: fixed;

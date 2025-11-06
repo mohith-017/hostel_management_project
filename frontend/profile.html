@@ -24,19 +24,31 @@
             
             <hr style="border:0; border-top: 1px solid var(--border-color); margin: 20px 0;">
 
-            <label for="profile-student-phone">Your Phone:</label>
-            <input type="text" id="profile-student-phone" placeholder="Your Phone Number" />
-            
-            <label for="profile-parent-name">Parent's Name:</label>
-            <input type="text" id="profile-parent-name" placeholder="Parent's Name" />
-            
-            <label for="profile-parent-phone">Parent's Phone:</label>
-            <input type="text" id="profile-parent-phone" placeholder="Parent's Phone Number" />
+            <div class="profile-form-grid">
+                
+                <div class="form-group my-styling">
+                    <label for="profile-student-phone">Your Phone:</label>
+                    <input type="text" id="profile-student-phone" placeholder="Your Phone Number" />
+                </div>
+                
+                <div class="form-group my-styling">
+                    <label for="profile-parent-name">Parent's Name:</label>
+                    <input type="text" id="profile-parent-name" placeholder="Parent's Name" />
+                </div>
+                
+                <div class="form-group my-styling">
+                    <label for="profile-parent-phone">Parent's Phone:</label>
+                    <input type="text" id="profile-parent-phone" placeholder="Parent's Phone Number" />
+                </div>
 
-            <label for="profile-address">Home Address:</label>
-            <textarea id="profile-address" rows="3" placeholder="Home Address"></textarea>
+                <div class="form-group full-width">
+                    <label for="profile-address">Home Address:</label>
+                    <textarea id="profile-address" rows="3" placeholder="Home Address"></textarea>
+                </div>
             
-            <button id="save-profile-btn">Save Changes</button>
+            </div>
+            
+            <button id="save-profile-btn" style="margin-top: 20px;">Save Changes</button>
         </div>
     </main>
 

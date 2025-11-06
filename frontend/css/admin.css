@@ -256,9 +256,26 @@ tbody tr:hover {
   background-color: #16a34a;
 }
 
+/* (NEW) Blue button style for primary actions */
+.btn-info {
+    background-color: var(--info-color);
+}
+
+.btn-info:hover {
+     background-color: #0c84c6; /* Darker blue */
+}
+
+
 .btn-disabled {
   background-color: var(--admin-accent);
   cursor: not-allowed;
 }
 
-/* Use admin accent for disabled */
+/* (NEW) Style for form buttons like 'Post Announcement' */
+#create-form .action-btn {
+  width: 100%;
+  border-radius: 5px; /* Use 5px for form buttons */
+  font-size: 15px;
+  padding: 12px;
+  margin-top: 0; /* Remove default margin from table buttons */
+}
