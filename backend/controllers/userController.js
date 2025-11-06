@@ -138,3 +138,61 @@ export const getMyRoom = async (req, res) => {
     res.status(500).json({ error: "Server error while fetching room details." });
   }
 };
+
+// (NEW FUNCTION)
+// @desc    Get user profile for student
+// @route   GET /api/users/profile
+export const getUserProfile = async (req, res) => {
+  try {
+    // req.user.id comes from the 'protect' middleware
+    const user = await User.findById(req.user.id).select('-password');
+    
+    if (user) {
+      res.json({
+        name: user.name,
+        admissionNo: user.admissionNo,
+        studentPhone: user.studentPhone,
+        parentName: user.parentName,
+        parentPhone: user.parentPhone,
+        address: user.address
+      });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// (NEW FUNCTION)
+// @desc    Update user profile for student
+// @route   PUT /api/users/profile
+export const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (user) {
+      // Update only the fields students are allowed to change
+      user.studentPhone = req.body.studentPhone || user.studentPhone;
+      user.parentName = req.body.parentName || user.parentName;
+      user.parentPhone = req.body.parentPhone || user.parentPhone;
+      user.address = req.body.address || user.address;
+
+      const updatedUser = await user.save();
+      
+      res.json({
+        message: "Profile Updated!",
+        // Send back the updated info
+        studentPhone: updatedUser.studentPhone,
+        parentName: updatedUser.parentName,
+        parentPhone: updatedUser.parentPhone,
+        address: updatedUser.address
+      });
+
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};

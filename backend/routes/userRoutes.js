@@ -1,13 +1,23 @@
 import express from "express";
-import { registerUser, loginUser, getMyRoom } from "../controllers/userController.js"; // (Import new function)
-import { protect } from "../middleware/authMiddleware.js"; // (Import protect)
+import { 
+  registerUser, 
+  loginUser, 
+  getMyRoom,
+  getUserProfile,      // (NEW)
+  updateUserProfile    // (NEW)
+} from "../controllers/userController.js"; 
+import { protect } from "../middleware/authMiddleware.js"; 
 
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
-// (NEW ROUTE) - Protected, only logged-in users can access
+// Protected, only logged-in users can access
 router.get("/my-room", protect, getMyRoom); 
+
+// (NEW) Add these two routes for the profile page
+router.get("/profile", protect, getUserProfile);
+router.put("/profile", protect, updateUserProfile);
 
 export default router;

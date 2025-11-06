@@ -21,11 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'index.html';
   });
 
-  // (NEW) Fetch and display room details
+  // Fetch and display room details
   fetchMyRoomDetails();
+  // (NEW) Fetch announcements
+  fetchAnnouncements(); 
 });
 
-// (NEW FUNCTION) Fetch My Room Details
+// Fetch My Room Details
 async function fetchMyRoomDetails() {
     const token = localStorage.getItem('token');
     const roomDetailsContent = document.getElementById('room-details-content');
@@ -61,5 +63,41 @@ async function fetchMyRoomDetails() {
     } catch (error) {
         console.error("Error fetching room details:", error);
         roomDetailsContent.innerHTML = `<p style="color: red;">Error loading room details.</p>`;
+    }
+}
+
+// (NEW FUNCTION) Fetch Announcements
+async function fetchAnnouncements() {
+    const token = localStorage.getItem('token');
+    const listContainer = document.getElementById('announcements-list');
+    if (!token || !listContainer) return;
+
+    try {
+        const res = await fetch(`${baseUrl}/api/announcements`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const announcements = await res.json();
+        if (!res.ok) throw new Error(announcements.error || 'Failed to fetch');
+
+        if (announcements.length === 0) {
+            listContainer.innerHTML = '<p>No announcements at this time.</p>';
+            return;
+        }
+
+        listContainer.innerHTML = ''; // Clear loading
+        announcements.forEach(a => {
+            const item = document.createElement('div');
+            item.className = 'announcement-item';
+            item.innerHTML = `
+                <h3>${a.title}</h3>
+                <p>${a.content}</p>
+                <small>Posted: ${new Date(a.createdAt).toLocaleDateString()}</small>
+            `;
+            listContainer.appendChild(item);
+        });
+
+    } catch (error) {
+        listContainer.innerHTML = `<p style="color: red;">Error loading announcements.</p>`;
     }
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Announcements</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>Manage Announcements</h1>
+    <nav>
+      <a href="admin-dashboard.html" class="nav-link">Dashboard</a>
+      <a href="admin-complaints.html" class="nav-link">Complaints</a>
+      <a href="admin-fees.html" class="nav-link">Fees Due</a>
+      <a href="admin-announcements.html" class="nav-link">Announcements</a>
+      <a href="rooms.html" target="_blank" class="nav-link">Room Availability</a>
+      <button id="logout-btn" class="logout-button">Logout</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <section class="data-section">
+      <h2>Create New Announcement</h2>
+      <div id="create-form">
+        <input type="text" id="announcement-title" placeholder="Announcement Title" class="admin-input-full" />
+        <textarea id="announcement-content" rows="4" placeholder="Announcement content..." class="admin-input-full"></textarea>
+        <button id="create-btn" class="action-btn btn-resolve" style="width: 100%; border-radius: 5px;">Post Announcement</button>
+      </div>
+    </section>
+
+    <section class="data-section">
+      <h2>Recent Announcements</h2>
+      <div id="announcements-list-container">
+        <p>Loading recent announcements...</p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .admin-input-full {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      border: 1px solid var(--border-color-admin);
+      background: rgba(0,0,0,0.2);
+      color: var(--light-text-admin);
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .announcement-item-admin {
+      background: rgba(0,0,0,0.15);
+      border: 1px solid var(--border-color-admin);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .announcement-item-admin h3 {
+      margin-top: 0;
+      color: var(--light-text-admin);
+    }
+    .announcement-item-admin p {
+      color: #cbd5e1;
+      margin: 5px 0;
+    }
+    .announcement-item-admin small {
+      font-size: 0.8em;
+      color: var(--admin-accent);
+    }
+    .announcement-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+  </style>
+
+  <script src="js/admin-announcements.js"></script>
+</body>
+</html>

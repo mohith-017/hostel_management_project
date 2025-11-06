@@ -26,11 +26,23 @@
         <p>Submit a complaint about hostel facilities.</p>
       </a>
 
+      <a href="profile.html" class="dashboard-card">
+        <h3>My Profile</h3>
+        <p>View and update your contact details.</p>
+      </a>
+
     </div>
 
     <div id="my-room-section" class="info-section"> <h2>My Room Details</h2>
         <div id="room-details-content" class="info-card"> <p>Loading your room details...</p>
         </div>
+    </div>
+
+    <div id="announcements-section" class="info-section">
+      <h2>Announcements</h2>
+      <div id="announcements-list">
+        <p>Loading announcements...</p>
+      </div>
     </div>
 
     <div class="info-section"> <h2>Hostel Information</h2>
@@ -49,6 +61,29 @@
       </div>
     </div>
   </main>
+
+  <style>
+  .announcement-item {
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+  }
+  .announcement-item h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 5px;
+  }
+  .announcement-item p {
+      color: #334155;
+      margin: 5px 0;
+  }
+  .announcement-item small {
+      color: #64748b;
+      font-size: 0.85em;
+  }
+  </style>
 
   <script src="js/dashboard.js"></script>
 </body>

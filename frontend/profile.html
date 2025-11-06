@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <header class="header">
+        <h1>My Profile</h1>
+        <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+    </header>
+    
+    <div id="toast-container"></div>
+
+    <main class="container-small">
+        <div id="profile-box" class="info-section">
+            <h2>Your Details</h2>
+            
+            <p><strong>Name:</strong> <span id="profile-name">Loading...</span></p>
+            <p><strong>Admission No:</strong> <span id="profile-admissionNo">Loading...</span></p>
+            
+            <hr style="border:0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <label for="profile-student-phone">Your Phone:</label>
+            <input type="text" id="profile-student-phone" placeholder="Your Phone Number" />
+            
+            <label for="profile-parent-name">Parent's Name:</label>
+            <input type="text" id="profile-parent-name" placeholder="Parent's Name" />
+            
+            <label for="profile-parent-phone">Parent's Phone:</label>
+            <input type="text" id="profile-parent-phone" placeholder="Parent's Phone Number" />
+
+            <label for="profile-address">Home Address:</label>
+            <textarea id="profile-address" rows="3" placeholder="Home Address"></textarea>
+            
+            <button id="save-profile-btn">Save Changes</button>
+        </div>
+    </main>
+
+    <script src="js/profile.js"></script>
+</body>
+</html>

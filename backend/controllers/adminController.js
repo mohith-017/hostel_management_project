@@ -56,3 +56,29 @@ export const getAllStudents = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// (NEW FUNCTION)
+// @desc    Update a student's details (by Admin)
+// @route   PUT /api/admin/students/:id
+export const updateStudent = async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id);
+
+    if (!student || student.role !== 'student') {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    // Update only the fields provided in the body
+    // This is flexible, so you can expand it to update parentPhone, address, etc.
+    if (req.body.studentPhone) student.studentPhone = req.body.studentPhone;
+    if (req.body.parentPhone) student.parentPhone = req.body.parentPhone;
+    if (req.body.address) student.address = req.body.address;
+    if (req.body.semester) student.semester = req.body.semester;
+
+    const updatedStudent = await student.save();
+    res.json({ message: "Student updated successfully", student: updatedStudent });
+
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
