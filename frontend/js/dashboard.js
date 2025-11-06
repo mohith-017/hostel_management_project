@@ -1,14 +1,17 @@
 const baseUrl = "http://localhost:5000"; // Define baseUrl here
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user'));
+// (REMOVED) jsPDF is no longer needed here
+
+// (REMOVED) showToast function is no longer needed here
 
 // Basic security check and user personalization
 document.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('token');
   if (!token) {
     window.location.href = 'index.html'; // Redirect to login if not authenticated
     return;
   }
 
-  const user = JSON.parse(localStorage.getItem('user'));
   if (user && user.name) {
     document.getElementById('welcome-message').textContent = `Welcome, ${user.name}!`;
   }
@@ -23,16 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fetch and display room details
   fetchMyRoomDetails();
-  // (NEW) Fetch announcements
+  // Fetch announcements
   fetchAnnouncements(); 
+  // (REMOVED) Fee check is no longer needed here
 });
 
 // Fetch My Room Details
 async function fetchMyRoomDetails() {
-    const token = localStorage.getItem('token');
     const roomDetailsContent = document.getElementById('room-details-content');
-
-    if (!token) return; // Should already be handled by DOMContentLoaded check
+    if (!token) return; 
 
     try {
         const res = await fetch(`${baseUrl}/api/users/my-room`, {
@@ -40,20 +42,17 @@ async function fetchMyRoomDetails() {
         });
 
         if (res.status === 404) {
-             // Handle case where user hasn't booked a room
              const data = await res.json();
              roomDetailsContent.innerHTML = `<p class="no-room-message">${data.message || 'You have not booked a room yet.'}</p>`;
              return;
         }
 
         if (!res.ok) {
-            // Handle other errors
             throw new Error('Could not fetch room details.');
         }
 
         const roomData = await res.json();
 
-        // Display the room details
         roomDetailsContent.innerHTML = `
             <p>You are currently booked in:</p>
             <p><strong>Room:</strong> <span class="room-highlight">${roomData.roomNumber}</span></p>
@@ -66,9 +65,8 @@ async function fetchMyRoomDetails() {
     }
 }
 
-// (NEW FUNCTION) Fetch Announcements
+// Fetch Announcements
 async function fetchAnnouncements() {
-    const token = localStorage.getItem('token');
     const listContainer = document.getElementById('announcements-list');
     if (!token || !listContainer) return;
 
@@ -101,3 +99,5 @@ async function fetchAnnouncements() {
         listContainer.innerHTML = `<p style="color: red;">Error loading announcements.</p>`;
     }
 }
+
+// (REMOVED) All PDF generation and fee checking functions are gone from this file.

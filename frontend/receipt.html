@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fee Receipt</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Fee Receipt</h1>
+        <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+    </header>
+    
+    <div id="toast-container"></div>
+
+    <main class="container-small">
+        <div class="info-section">
+            <h2 id="receipt-title">Loading Receipt...</h2>
+            
+            <div id="receipt-preview-container" class="hidden">
+                <div class="receipt-header">
+                    <img src="logo.png" alt="SJBIT Logo" />
+                    <h2>Hostel Fee Receipt</h2>
+                    <p>SJB Institute of Technology, Bengaluru-60</p>
+                </div>
+                <div class="receipt-section">
+                    <h3>Student Details</h3>
+                    <div class="receipt-details">
+                        <p><strong>Name:</strong> <span id="receipt-name"></span></p>
+                        <p><strong>Admission No:</strong> <span id="receipt-id"></span></p>
+                    </div>
+                </div>
+                <div class="receipt-section">
+                    <h3>Payment Details</h3>
+                    <div class="receipt-details">
+                        <p><strong>Payment Date:</strong> <span id="receipt-date"></span></p>
+                        <p><strong>Description:</strong> <span>Hostel Fee</span></p>
+                    </div>
+                </div>
+                <div class="receipt-total">
+                    <strong>Amount Paid:</strong>
+                    <strong id="receipt-amount" style="font-size: 20px;"></strong>
+                </div>
+                <div class="receipt-status-box">
+                    <span class="receipt-status-paid">PAID</span>
+                </div>
+                <div class="receipt-footer">
+                    This is a computer-generated receipt and does not require a signature.
+                </div>
+            </div>
+            
+            <p id="receipt-message"></p>
+            
+            <button id="download-receipt-btn" class="hidden">Download PDF</button>
+        </div>
+    </main>
+
+    <script src="js/receipt.js"></script>
+</body>
+</html>

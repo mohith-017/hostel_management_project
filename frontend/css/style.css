@@ -314,6 +314,23 @@ button:disabled {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* (NEW) Disabled card style */
+.dashboard-card.disabled {
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.dashboard-card.disabled:hover {
+  transform: none;
+}
+.dashboard-card.disabled h3,
+.dashboard-card.disabled p {
+  color: #475569;
+}
+
+
 .dashboard-card h3 {
   color: var(--primary-color);
   font-size: 22px;
@@ -780,7 +797,7 @@ textarea:focus {
 }
 
 
-/* --- Toast Notification --- */
+/* --- (NEW) Toast Notification --- */
 #toast-container {
   position: fixed;
   top: 80px;
@@ -839,4 +856,777 @@ textarea:focus {
     /* Remove padding override if any */
     padding: 30px 40px;
   }
+}
+
+/* --- (NEW) Receipt Page Styles --- */
+#receipt-preview-container {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  max-width: 700px;
+  margin: 0 auto 25px auto;
+  border: 1px solid #e2e8f0;
+}
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+}
+.receipt-header img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.receipt-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 20px;
+}
+.receipt-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+.receipt-section h3 {
+  font-size: 16px;
+  color: var(--primary-color);
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.receipt-details p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin: 10px 0;
+  color: #334155;
+}
+.receipt-details p strong {
+  font-weight: 600;
+  color: #1e293b;
+}
+.receipt-total {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 2px solid #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.receipt-total strong {
+  font-size: 18px;
+  color: #1e293b;
+}
+.receipt-status-box {
+  text-align: right;
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
+.receipt-status-paid {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success-color);
+  padding: 5px 10px;
+  border: 2px solid var(--success-color);
+  border-radius: 5px;
+}
+.receipt-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #64748b;
+  font-style: italic;
+}
+
+#download-receipt-btn {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: block; /* To apply margin auto */
+  background-color: var(--info-color);
+  font-size: 16px;
+}
+#download-receipt-btn:hover:not(:disabled) {
+  background-color: #0c84c6;
+}
+
+/* --- (NEW) Rules & Timings Section --- */
+#hostel-timings h4 {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+}
+
+.timings-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.timings-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  font-size: 15px;
+  color: #334155;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.timings-list li:last-child {
+  border-bottom: none;
+}
+
+.timings-list li strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: rules-counter;
+}
+
+.rules-list li {
+  counter-increment: rules-counter;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 35px;
+}
+
+.rules-list li::before {
+  content: counter(rules-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background: var(--primary-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.rules-list li strong {
+  color: #1e3a8a;
+  display: block; /* Makes the bold text sit on its own line */
+  margin-bottom: 2px;
+}
+
+/* --- (MODIFIED) Profile Page Form Grid --- */
+#profile-box .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: left;
+}
+
+#profile-box .form-group input {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box; 
+  height: 35px;
+  border-radius: 8px;
+  border-color: rgb(224, 247, 255);
+  background-color: rgb(224, 247, 255);
+  padding: 5px 14px; 
+}
+
+#profile-box .form-group textarea {
+  width: 100%;
+  margin: 0; 
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 25px 20px; 
+  margin-bottom: 20px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1; 
+}
+
+@media (max-width: 600px) {
+  .profile-form-grid {
+    grid-template-columns: 1fr; 
+    gap: 20px;
+  }
+}
+
+/* --- (NEW) Toast Notification --- */
+#toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.toast {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--dark-text);
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  border-left: 5px solid;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.toast-success {
+  border-left-color: var(--success-color);
+}
+
+.toast.toast-error {
+  border-left-color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 450px; 
+  }
+  .login-image-container {
+    display: none; 
+  }
+  .auth-box {
+    flex-basis: 100%;
+    padding: 30px 40px;
+  }
+}
+
+/* --- (NEW) Receipt Page Styles --- */
+#receipt-preview-container {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  max-width: 700px;
+  margin: 0 auto 25px auto;
+  border: 1px solid #e2e8f0;
+}
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+}
+.receipt-header img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.receipt-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 20px;
+}
+.receipt-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+.receipt-section h3 {
+  font-size: 16px;
+  color: var(--primary-color);
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.receipt-details p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin: 10px 0;
+  color: #334155;
+}
+.receipt-details p strong {
+  font-weight: 600;
+  color: #1e293b;
+}
+.receipt-total {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 2px solid #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.receipt-total strong {
+  font-size: 18px;
+  color: #1e293b;
+}
+.receipt-status-box {
+  text-align: right;
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
+.receipt-status-paid {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success-color);
+  padding: 5px 10px;
+  border: 2px solid var(--success-color);
+  border-radius: 5px;
+}
+.receipt-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #64748b;
+  font-style: italic;
+}
+
+#download-receipt-btn {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: block;
+  background-color: var(--info-color);
+  font-size: 16px;
+}
+#download-receipt-btn:hover:not(:disabled) {
+  background-color: #0c84c6;
+}
+
+/* --- (NEW) Rules & Timings Section --- */
+#hostel-timings h4 {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+}
+
+.timings-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.timings-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  font-size: 15px;
+  color: #334155;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.timings-list li:last-child {
+  border-bottom: none;
+}
+
+.timings-list li strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: rules-counter;
+}
+
+.rules-list li {
+  counter-increment: rules-counter;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 35px;
+}
+
+.rules-list li::before {
+  content: counter(rules-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background: var(--primary-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.rules-list li strong {
+  color: #1e3a8a;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* --- (MODIFIED) Profile Page Form Grid --- */
+#profile-box .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: left;
+}
+
+#profile-box .form-group input {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box; 
+  height: 35px;
+  border-radius: 8px;
+  border-color: rgb(224, 247, 255);
+  background-color: rgb(224, 247, 255);
+  padding: 5px 14px; 
+}
+
+#profile-box .form-group textarea {
+  width: 100%;
+  margin: 0; 
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 25px 20px; 
+  margin-bottom: 20px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1; 
+}
+
+@media (max-width: 600px) {
+  .profile-form-grid {
+    grid-template-columns: 1fr; 
+    gap: 20px;
+  }
+}
+
+/* --- (NEW) Toast Notification --- */
+#toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.toast {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--dark-text);
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  border-left: 5px solid;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.toast-success {
+  border-left-color: var(--success-color);
+}
+
+.toast.toast-error {
+  border-left-color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 450px; 
+  }
+  .login-image-container {
+    display: none; 
+  }
+  .auth-box {
+    flex-basis: 100%;
+    padding: 30px 40px;
+  }
+}
+
+/* --- (NEW) Receipt Page Styles --- */
+#receipt-preview-container {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  max-width: 700px;
+  margin: 0 auto 25px auto;
+  border: 1px solid #e2e8f0;
+}
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+}
+.receipt-header img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.receipt-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 20px;
+}
+.receipt-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+.receipt-section h3 {
+  font-size: 16px;
+  color: var(--primary-color);
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.receipt-details p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin: 10px 0;
+  color: #334155;
+}
+.receipt-details p strong {
+  font-weight: 600;
+  color: #1e293b;
+}
+.receipt-total {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 2px solid #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.receipt-total strong {
+  font-size: 18px;
+  color: #1e293b;
+}
+.receipt-status-box {
+  text-align: right;
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
+.receipt-status-paid {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success-color);
+  padding: 5px 10px;
+  border: 2px solid var(--success-color);
+  border-radius: 5px;
+}
+.receipt-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #64748b;
+  font-style: italic;
+}
+
+#download-receipt-btn {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: block;
+  background-color: var(--info-color);
+  font-size: 16px;
+}
+#download-receipt-btn:hover:not(:disabled) {
+  background-color: #0c84c6;
+}
+
+/* --- (NEW) Rules & Timings Section --- */
+#hostel-timings h4 {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+}
+
+.timings-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.timings-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  font-size: 15px;
+  color: #334155;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.timings-list li:last-child {
+  border-bottom: none;
+}
+
+.timings-list li strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: rules-counter;
+}
+
+.rules-list li {
+  counter-increment: rules-counter;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 35px;
+}
+
+.rules-list li::before {
+  content: counter(rules-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background: var(--primary-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.rules-list li strong {
+  color: #1e3a8a;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* --- (NEW) Mess Menu Table Styles --- */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+    -webkit-overflow-scrolling: touch;
+}
+
+.mess-menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    overflow: hidden; /* For border-radius */
+}
+
+.mess-menu-table th,
+.mess-menu-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: #334155;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.mess-menu-table th {
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--primary-color);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.mess-menu-table td strong {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.mess-menu-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mess-menu-note {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #334155;
+}
+
+.mess-menu-note strong {
+    color: var(--primary-color);
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.mess-menu-note ul {
+    padding-left: 20px;
+    margin: 5px 0 0 0;
 }
