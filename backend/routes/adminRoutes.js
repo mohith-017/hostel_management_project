@@ -4,7 +4,9 @@ import {
   getPendingComplaints,
   getPendingFees,
   getAllStudents,
-  updateStudent // (NEW)
+  updateStudent,
+  getStudentFeeStatus,     // (NEW)
+  getStudentComplaints     // (NEW)
 } from "../controllers/adminController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -16,7 +18,11 @@ router.get("/complaints", protect, admin, getPendingComplaints);
 router.get("/fees", protect, admin, getPendingFees);
 router.get("/students", protect, admin, getAllStudents);
 
-// (NEW) Add route for updating a student
+// (MODIFIED) Route for updating a student
 router.put("/students/:id", protect, admin, updateStudent);
+
+// === (NEW) Routes for specific student data ===
+router.get("/student/:id/fees", protect, admin, getStudentFeeStatus);
+router.get("/student/:id/complaints", protect, admin, getStudentComplaints);
 
 export default router;

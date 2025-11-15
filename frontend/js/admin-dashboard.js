@@ -2,6 +2,11 @@ const baseUrl = "http://localhost:5000";
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user'));
 
+// (NEW) Modal Elements
+const modalBackdrop = document.getElementById('student-modal-backdrop');
+const modalContent = document.getElementById('student-modal-content');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+
 document.addEventListener('DOMContentLoaded', () => {
   // Security checks
   if (!token) {
@@ -27,6 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load stats AND student data
   fetchStats();
   fetchStudents();
+
+  // (NEW) Add modal close listeners
+  modalCloseBtn?.addEventListener('click', hideStudentModal);
+  modalBackdrop?.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) { // Only close if clicking the backdrop itself
+      hideStudentModal();
+    }
+  });
 });
 
 // Fetch API helper
@@ -63,14 +76,14 @@ async function fetchStudents() {
     tableBody.innerHTML = ''; // Clear
 
     if (students.length === 0) {
-      // (UPDATED) Colspan is 8 now
-      tableBody.innerHTML = '<tr><td colspan="8">No students found.</td></tr>';
+      // (UPDATED) Colspan is 7 now
+      tableBody.innerHTML = '<tr><td colspan="7">No students found.</td></tr>';
       return;
     }
 
     students.forEach(s => {
       const row = tableBody.insertRow();
-      // (UPDATED) Added new <td> for button
+      // (UPDATED) Changed layout, added data-* attributes to button
       row.innerHTML = `
         <td>${s.name}</td>
         <td>${s.admissionNo}</td>
@@ -78,26 +91,28 @@ async function fetchStudents() {
         <td>${s.studentPhone || 'N/A'}</td>
         <td>${s.parentName || 'N/A'}</td>
         <td>${s.parentPhone || 'N/A'}</td>
-        <td>${s.address || 'N/A'}</td>
         <td>
-          <button class="action-btn btn-progress" data-id="${s._id}" data-phone="${s.studentPhone || ''}">
-            Edit Phone
+          <button class="action-btn btn-info" 
+            data-id="${s._id}"
+            data-name="${s.name}"
+            data-admission-no="${s.admissionNo}"
+            data-semester="${s.semester || 'N/A'}"
+            data-student-phone="${s.studentPhone || 'N/A'}"
+            data-parent-name="${s.parentName || 'N/A'}"
+            data-parent-phone="${s.parentPhone || 'N/A'}"
+            data-address="${s.address || 'N/A'}">
+            View
           </button>
         </td>
       `;
     });
 
-    // (NEW) Add event listeners for edit buttons
+    // (NEW) Add event listeners for "View" buttons
     tableBody.querySelectorAll('.action-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            const id = e.target.dataset.id;
-            const currentPhone = e.target.dataset.phone;
-            
-            const newPhone = prompt("Enter new phone number for this student:", currentPhone);
-            
-            if (newPhone && newPhone !== currentPhone) {
-                updateStudentPhone(id, newPhone);
-            }
+            // Read all student data from the button's data attributes
+            const student = { ...e.target.dataset };
+            showStudentModal(student);
         });
     });
 
@@ -105,33 +120,85 @@ async function fetchStudents() {
     console.error("Error loading students:", error);
      const tableBody = document.getElementById('students-table')?.querySelector('tbody');
      if(tableBody){
-        // (UPDATED) Colspan is 8 now
-        tableBody.innerHTML = `<tr><td colspan="8">Error loading students: ${error.message}</td></tr>`;
+        // (UPDATED) Colspan is 7 now
+        tableBody.innerHTML = `<tr><td colspan="7">Error loading students: ${error.message}</td></tr>`;
      }
   }
 }
 
-// (NEW FUNCTION)
-async function updateStudentPhone(id, studentPhone) {
-    try {
-        const res = await fetch(`${baseUrl}/api/admin/students/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ studentPhone }) // Only send the field to update
-        });
+// === (NEW) MODAL FUNCTIONS ===
 
-        const data = await res.json();
-        if (!res.ok) {
-            throw new Error(data.error || 'Failed to update student');
-        }
+function showStudentModal(student) {
+  if (!modalBackdrop) return;
 
-        alert("Student phone number updated successfully!");
-        fetchStudents(); // Refresh the table
-        
-    } catch (error) {
-        alert(`Update Error: ${error.message}`);
-    }
+  // 1. Populate static student details
+  document.getElementById('modal-name').textContent = student.name;
+  document.getElementById('modal-admission-no').textContent = student.admissionNo;
+  document.getElementById('modal-semester').textContent = student.semester;
+  document.getElementById('modal-student-phone').textContent = student.studentPhone;
+  document.getElementById('modal-parent-name').textContent = student.parentName;
+  document.getElementById('modal-parent-phone').textContent = student.parentPhone;
+  document.getElementById('modal-address').textContent = student.address;
+
+  // 2. Set loading state for dynamic content
+  document.getElementById('modal-fee-status').innerHTML = '<p>Loading fee status...</p>';
+  document.getElementById('modal-complaints-list').innerHTML = '<p>Loading complaints...</p>';
+
+  // 3. Fetch dynamic content
+  fetchStudentFee(student.id);
+  fetchStudentComplaints(student.id);
+
+  // 4. Show the modal
+  modalBackdrop.classList.remove('hidden');
 }
+
+function hideStudentModal() {
+  if (!modalBackdrop) return;
+  modalBackdrop.classList.add('hidden');
+}
+
+// (NEW) Fetch fee status for one student
+async function fetchStudentFee(studentId) {
+  const feeContainer = document.getElementById('modal-fee-status');
+  try {
+    const fee = await fetchApi(`/student/${studentId}/fees`);
+    
+    if (fee.status === 'paid') {
+      feeContainer.innerHTML = `<p class="modal-fee-paid">PAID</p>`;
+    } else {
+      feeContainer.innerHTML = `<p class="modal-fee-pending">PENDING (₹${fee.amount})</p>`;
+    }
+  } catch (error) {
+    feeContainer.innerHTML = `<p>${error.message}</p>`;
+  }
+}
+
+// (NEW) Fetch complaints for one student
+async function fetchStudentComplaints(studentId) {
+  const complaintsContainer = document.getElementById('modal-complaints-list');
+  try {
+    const complaints = await fetchApi(`/student/${studentId}/complaints`);
+
+    if (complaints.length === 0) {
+      complaintsContainer.innerHTML = '<p>No pending complaints found.</p>';
+      return;
+    }
+
+    complaintsContainer.innerHTML = ''; // Clear loading
+    complaints.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'modal-complaint-item';
+      item.innerHTML = `
+        <span class="status status-${c.status.toLowerCase().replace(' ', '-')}">${c.status}</span>
+        <strong>${c.category}</strong>
+        <p>${c.description}</p>
+      `;
+      complaintsContainer.appendChild(item);
+    });
+
+  } catch (error) {
+    complaintsContainer.innerHTML = `<p>Error loading complaints: ${error.message}</p>`;
+  }
+}
+
+// (REMOVED) updateStudentPhone function is no longer needed.

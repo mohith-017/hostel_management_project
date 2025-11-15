@@ -1630,3 +1630,39 @@ textarea:focus {
     padding-left: 20px;
     margin: 5px 0 0 0;
 }
+
+/* === (NEW) Custom Scrollbar Styles === */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  /* Background of the track (the "empty" part) */
+  background: rgba(255, 255, 255, 0.2); /* Light frost */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  /* The movable "handle" */
+  background: var(--primary-color); /* Use the main theme color */
+  border-radius: 10px;
+  border: 2px solid transparent; /* Creates a "padding" effect */
+  background-clip: content-box; /* Makes the border transparent */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color); /* Lighter blue on hover */
+}
+
+.form-section a {
+  color: var(--primary-color); /* (MODIFIED) Was --secondary-color. Now dark blue for visibility. */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s; /* (NEW) Added a smooth transition */
+}
+
+.form-section a:hover {
+  text-decoration: underline;
+  color: var(--secondary-color); /* (NEW) On hover, it turns to the nice light-blue */
+}

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/admin.css?v=1.2" />
 </head>
 <body>
 
@@ -47,17 +47,46 @@
               <th>Student Phone</th>
               <th>Parent Name</th>
               <th>Parent Phone</th>
-              <th>Address</th>
-              <th>Actions</th>
+              <th>View Profile</th>
             </tr>
           </thead>
           <tbody>
-            </tbody>
+             </tbody>
         </table>
       </div>
     </section>
-    </main>
+  </main>
 
+  <div id="student-modal-backdrop" class="modal-backdrop hidden">
+    <div id="student-modal-content" class="modal-content">
+      <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+      
+      <div id="modal-student-details" class="modal-section">
+        <h2 id="modal-name">Loading...</h2>
+        <p><strong>ID:</strong> <span id="modal-admission-no"></span></p>
+        <p><strong>Semester:</strong> <span id="modal-semester"></span></p>
+        <p><strong>Phone:</strong> <span id="modal-student-phone"></span></p>
+        <p><strong>Parent:</strong> <span id="modal-parent-name"></span></p>
+        <p><strong>Parent Phone:</strong> <span id="modal-parent-phone"></span></p>
+        <p><strong>Address:</strong> <span id="modal-address"></span></p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Fee Status</h3>
+        <div id="modal-fee-status">
+          <p>Loading fee status...</p>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Pending Complaints</h3>
+        <div id="modal-complaints-list">
+          <p>Loading complaints...</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
   <script src="js/admin-dashboard.js"></script>
 </body>
 </html>

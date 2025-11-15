@@ -8,8 +8,9 @@
   /* Slate */
   --admin-accent: #64748b;
   /* Lighter Slate */
-  --frost-background-admin: rgba(255, 255, 255, 0.1);
-  /* Slightly less visible frost */
+  
+  --frost-background-admin: rgba(255, 255, 255, 0.1); 
+  
   --border-color-admin: rgba(255, 255, 255, 0.2);
   --frost-blur-admin: 10px;
   /* Slightly more blur */
@@ -26,17 +27,39 @@
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(120deg, #334155, #1e293b);
-  /* Dark Slate Gradient */
   background-attachment: fixed;
   color: #cbd5e1;
   /* Light grey text default */
   margin: 0;
 }
 
+/* === (NEW) Custom DARK Scrollbar Styles === */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2); /* Darker track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--admin-accent); /* Use the light slate color */
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* Lighter slate on hover */
+}
+/* === End Custom Scrollbar Styles === */
+
+
 /* --- Admin Header --- */
 .admin-header {
-  background: rgba(255, 255, 255, 0.1);
-  /* Darker frost */
+  background: var(--frost-background-admin); /* Using subtle frost */
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 15px 40px;
@@ -62,23 +85,33 @@ body {
   gap: 20px;
 }
 
-.admin-header .nav-link {
-  color: #e2e8f0;
-  text-decoration: none;
+/* === (MODIFIED) This block forces all link states to be white === */
+.admin-header nav a.nav-link {
+  color: #e2e8f0 !important; /* Force base color */
+  text-decoration: none !important; /* Force no underline */
   font-weight: 600;
   transition: color 0.3s;
 }
 
-.admin-header .nav-link:hover {
-  color: #fff;
+.admin-header nav a.nav-link:link,
+.admin-header nav a.nav-link:visited,
+.admin-header nav a.nav-link:active,
+.admin-header nav a.nav-link:focus {
+  color: #e2e8f0 !important; /* Force all states to be this color */
+  text-decoration: none !important;
 }
+
+.admin-header nav a.nav-link:hover {
+  color: #fff !important; /* Brighter white on hover */
+}
+/* === End of link fix === */
 
 .admin-header .logout-button {
   background: var(--error-color);
   border: none;
   color: white;
   padding: 10px 15px;
-  border-radius: 5px;
+  border-radius: 8px; 
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
@@ -105,12 +138,12 @@ body {
 }
 
 .stat-card {
-  background: var(--frost-background-admin);
+  background: var(--frost-background-admin); /* Using subtle frost */
   border: 1px solid var(--border-color-admin);
   backdrop-filter: blur(var(--frost-blur-admin));
   -webkit-backdrop-filter: blur(var(--frost-blur-admin));
   padding: 25px;
-  border-radius: 12px;
+  border-radius: 20px; /* Kept large radius */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
@@ -143,16 +176,14 @@ body {
   border-top: 4px solid var(--info-color);
 }
 
-/* Use info blue */
-
 /* --- Data Sections (Tables) --- */
 .data-section {
-  background: var(--frost-background-admin);
+  background: var(--frost-background-admin); /* Using subtle frost */
   border: 1px solid var(--border-color-admin);
   backdrop-filter: blur(var(--frost-blur-admin));
   -webkit-backdrop-filter: blur(var(--frost-blur-admin));
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 20px; /* Kept large radius */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
@@ -177,7 +208,6 @@ table {
   color: #e2e8f0;
 }
 
-/* Lighter table text */
 th,
 td {
   padding: 14px 15px;
@@ -199,7 +229,7 @@ tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.06);
 }
 
-/* Status Tags (Consistent with style.css) */
+/* Status Tags */
 .status {
   padding: 5px 12px;
   border-radius: 20px;
@@ -221,7 +251,7 @@ tbody tr:hover {
   background-color: var(--success-color);
 }
 
-/* Action Buttons (Consistent with style.css) */
+/* Action Buttons */
 .action-btn-group {
   display: flex;
   gap: 8px;
@@ -230,7 +260,7 @@ tbody tr:hover {
 .action-btn {
   padding: 7px 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; 
   cursor: pointer;
   font-weight: 600;
   font-size: 12px;
@@ -256,13 +286,18 @@ tbody tr:hover {
   background-color: #16a34a;
 }
 
-/* (NEW) Blue button style for primary actions */
 .btn-info {
     background-color: var(--info-color);
+    border-radius: 20px; 
 }
 
 .btn-info:hover {
-     background-color: #0c84c6; /* Darker blue */
+     background-color: #0c84c6; 
+}
+
+/* (NEW) Add margin to the "View" button in the student table */
+#students-table .btn-info {
+  margin-left: 25px;
 }
 
 
@@ -271,11 +306,134 @@ tbody tr:hover {
   cursor: not-allowed;
 }
 
-/* (NEW) Style for form buttons like 'Post Announcement' */
 #create-form .action-btn {
   width: 100%;
-  border-radius: 5px; /* Use 5px for form buttons */
+  border-radius: 8px; 
   font-size: 15px;
   padding: 12px;
-  margin-top: 0; /* Remove default margin from table buttons */
+  margin-top: 0; 
+}
+
+/* === MODAL STYLES === */
+.hidden {
+  display: none !important;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--frost-background-admin); 
+  backdrop-filter: blur(var(--frost-blur-admin));
+  -webkit-backdrop-filter: blur(var(--frost-blur-admin));
+  
+  border: 1px solid var(--border-color-admin);
+  border-radius: 20px; /* Kept large radius */
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  color: var(--light-text-admin);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: var(--admin-accent);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close-btn:hover {
+  color: var(--light-text-admin);
+}
+
+.modal-section {
+  margin-bottom: 25px;
+}
+
+.modal-section h2 {
+  color: var(--light-text-admin);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 24px;
+  border-bottom: 1px solid var(--admin-accent);
+  padding-bottom: 10px;
+}
+
+.modal-section h3 {
+  color: var(--light-text-admin);
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--admin-accent);
+  padding-bottom: 5px;
+}
+
+.modal-section p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.modal-section p strong {
+  color: var(--admin-accent);
+  min-width: 110px;
+  display: inline-block;
+}
+
+/* Fee status styling (Colors as requested) */
+.modal-fee-paid {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--success-color); /* Green */
+}
+.modal-fee-pending {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--error-color); /* Red */
+}
+
+/* Complaint item styling */
+#modal-complaints-list .modal-complaint-item {
+  background: rgba(0, 0, 0, 0.2);
+  
+  border: 1px solid var(--border-color-admin);
+  padding: 15px;
+  border-radius: 12px; 
+  margin-bottom: 10px;
+}
+
+#modal-complaints-list .modal-complaint-item strong {
+  color: var(--light-text-admin);
+  font-size: 16px;
+}
+#modal-complaints-list .modal-complaint-item p {
+  margin: 5px 0 0 0;
+  color: #cbd5e1;
+}
+#modal-complaints-list .modal-complaint-item .status {
+  float: right;
 }

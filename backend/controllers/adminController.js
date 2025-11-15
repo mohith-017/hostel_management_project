@@ -57,7 +57,6 @@ export const getAllStudents = async (req, res) => {
   }
 };
 
-// (NEW FUNCTION)
 // @desc    Update a student's details (by Admin)
 // @route   PUT /api/admin/students/:id
 export const updateStudent = async (req, res) => {
@@ -69,7 +68,6 @@ export const updateStudent = async (req, res) => {
     }
 
     // Update only the fields provided in the body
-    // This is flexible, so you can expand it to update parentPhone, address, etc.
     if (req.body.studentPhone) student.studentPhone = req.body.studentPhone;
     if (req.body.parentPhone) student.parentPhone = req.body.parentPhone;
     if (req.body.address) student.address = req.body.address;
@@ -80,5 +78,38 @@ export const updateStudent = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+// === (NEW) FUNCTION 1 ===
+// @desc    Get fee status for a specific student
+// @route   GET /api/admin/student/:id/fees
+export const getStudentFeeStatus = async (req, res) => {
+  try {
+    const fee = await Fee.findOne({ student: req.params.id });
+    if (!fee) {
+      return res.status(404).json({ error: "No fee record found for this student." });
+    }
+    res.json(fee);
+  } catch (error) {
+     res.status(500).json({ error: "Server error" });
+  }
+};
+
+// === (NEW) FUNCTION 2 ===
+// @desc    Get pending complaints for a specific student
+// @route   GET /api/admin/student/:id/complaints
+export const getStudentComplaints = async (req, res) => {
+  try {
+    const complaints = await Complaint.find({
+      student: req.params.id,
+      status: { $in: ['Submitted', 'In Progress'] }
+    }).sort({ createdAt: -1 });
+    
+    // It's not an error to have no complaints, just return an empty array
+    res.json(complaints); 
+  } catch (error) {
+     res.status(500).json({ error: "Server error" });
   }
 };
