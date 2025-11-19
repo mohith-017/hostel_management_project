@@ -3,7 +3,7 @@ import Room from "../models/Room.js";
 export const getRoomsByQuery = async (req, res) => {
   try {
     const { block, floor } = req.query;
-    const rooms = await Room.find({ block, floor }).populate('beds.occupant', 'name admissionNo');
+    const rooms = await Room.find({ block, floor }).populate('beds.occupant', 'name usn');
     res.json(rooms);
   } catch (err) {
     // (FIX 1) Send 'error' property so the popper can read it

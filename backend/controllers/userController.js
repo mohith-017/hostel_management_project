@@ -11,23 +11,23 @@ const generateToken = (id) => {
 export const registerUser = async (req, res) => {
   try {
     const {
-      name, admissionNo, role, password,
+      name, usn, role, password,
       semester, studentPhone, parentName, parentPhone, address, // Student fields
       post // Admin fields
     } = req.body;
 
     // Basic validation
-    if (!name || !admissionNo || !role || !password) {
-      return res.status(400).json({ error: "Please fill name, ID, role, and password." });
+    if (!name || !usn || !role || !password) {
+      return res.status(400).json({ error: "Please fill name, USN, role, and password." });
     }
 
-    const userExists = await User.findOne({ admissionNo });
+    const userExists = await User.findOne({ usn });
     if (userExists) {
-      return res.status(400).json({ error: "User with this ID already exists!" });
+      return res.status(400).json({ error: "User with this USN already exists!" });
     }
 
     // Prepare userData object based on role
-    const userData = { name, admissionNo, role, password };
+    const userData = { name, usn, role, password };
 
     if (role === 'student') {
         // Validate student-specific required fields
@@ -76,14 +76,14 @@ export const registerUser = async (req, res) => {
 // @route   POST /api/users/login
 export const loginUser = async (req, res) => {
   try {
-    const { admissionNo, role, password } = req.body;
+    const { usn, role, password } = req.body;
 
-    if (!admissionNo || !role || !password) {
-         return res.status(400).json({ error: "Please provide ID, Role, and Password." });
+    if (!usn || !role || !password) {
+         return res.status(400).json({ error: "Please provide USN, Role, and Password." });
     }
 
-    // Find user by admission number and specified role
-    const user = await User.findOne({ admissionNo, role });
+    // Find user by USN and specified role
+    const user = await User.findOne({ usn, role });
 
     if (user && (await user.matchPassword(password))) {
       // Login successful
@@ -91,7 +91,7 @@ export const loginUser = async (req, res) => {
         message: "Login successful!",
         token: generateToken(user._id),
         // Send only necessary user info to frontend
-        user: { name: user.name, role: user.role, id: user._id },
+        user: { name: user.name, role: user.role, id: user._id, usn: user.usn },
       });
     } else {
       // Invalid credentials or role doesn't match
@@ -150,7 +150,7 @@ export const getUserProfile = async (req, res) => {
     if (user) {
       res.json({
         name: user.name,
-        admissionNo: user.admissionNo,
+        usn: user.usn,
         studentPhone: user.studentPhone,
         parentName: user.parentName,
         parentPhone: user.parentPhone,

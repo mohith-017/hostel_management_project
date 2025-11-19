@@ -23,7 +23,7 @@ export const getDashboardStats = async (req, res) => {
 export const getPendingComplaints = async (req, res) => {
   try {
     const complaints = await Complaint.find({ status: { $in: ['Submitted', 'In Progress'] } })
-      .populate('student', 'name admissionNo semester studentPhone')
+      .populate('student', 'name usn semester studentPhone')
       .sort({ createdAt: -1 });
     res.json(complaints);
   } catch (error) {
@@ -36,7 +36,7 @@ export const getPendingComplaints = async (req, res) => {
 export const getPendingFees = async (req, res) => {
   try {
     const fees = await Fee.find({ status: 'pending' })
-      .populate('student', 'name admissionNo semester studentPhone')
+      .populate('student', 'name usn semester studentPhone')
       .sort({ createdAt: 1 });
     res.json(fees);
   } catch (error) {
