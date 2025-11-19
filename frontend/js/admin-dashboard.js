@@ -83,10 +83,10 @@ async function fetchStudents() {
 
     students.forEach(s => {
       const row = tableBody.insertRow();
-      // (UPDATED) Changed layout, added data-* attributes to button
+      // (UPDATED) Use s.usn, data-usn
       row.innerHTML = `
         <td>${s.name}</td>
-        <td>${s.admissionNo}</td>
+        <td>${s.usn}</td>
         <td>${s.semester || 'N/A'}</td>
         <td>${s.studentPhone || 'N/A'}</td>
         <td>${s.parentName || 'N/A'}</td>
@@ -95,7 +95,7 @@ async function fetchStudents() {
           <button class="action-btn btn-info" 
             data-id="${s._id}"
             data-name="${s.name}"
-            data-admission-no="${s.admissionNo}"
+            data-usn="${s.usn}"
             data-semester="${s.semester || 'N/A'}"
             data-student-phone="${s.studentPhone || 'N/A'}"
             data-parent-name="${s.parentName || 'N/A'}"
@@ -133,7 +133,7 @@ function showStudentModal(student) {
 
   // 1. Populate static student details
   document.getElementById('modal-name').textContent = student.name;
-  document.getElementById('modal-admission-no').textContent = student.admissionNo;
+  document.getElementById('modal-usn').textContent = student.usn;
   document.getElementById('modal-semester').textContent = student.semester;
   document.getElementById('modal-student-phone').textContent = student.studentPhone;
   document.getElementById('modal-parent-name').textContent = student.parentName;

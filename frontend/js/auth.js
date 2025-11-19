@@ -50,7 +50,7 @@ function toggleForm() {
 async function signup() {
   // Ensure all elements exist before getting values
   const nameInput = document.getElementById('signup-name');
-  const admissionNoInput = document.getElementById('signup-id');
+  const usnInput = document.getElementById('signup-usn');
   const roleSelect = document.getElementById('signup-role');
   const passwordInput = document.getElementById('signup-password');
   const confirmInput = document.getElementById('signup-confirm');
@@ -61,24 +61,24 @@ async function signup() {
   const addressInput = document.getElementById('signup-address');
   const postInput = document.getElementById('signup-post');
 
-  if (!nameInput || !admissionNoInput || !roleSelect || !passwordInput || !confirmInput) {
+  if (!nameInput || !usnInput || !roleSelect || !passwordInput || !confirmInput) {
       showMessage("Form elements missing. Please check HTML.", 'error');
       return;
   }
 
   const name = nameInput.value.trim();
-  const admissionNo = admissionNoInput.value.trim();
+  const usn = usnInput.value.trim();
   const role = roleSelect.value;
   const password = passwordInput.value.trim();
   const confirm = confirmInput.value.trim();
 
   // Basic validation
-  if (!name || !admissionNo || !role || !password || !confirm) {
+  if (!name || !usn || !role || !password || !confirm) {
        return showMessage("Please fill all required fields.", 'error');
   }
   if (password !== confirm) return showMessage("Passwords do not match!", 'error');
 
-  const userData = { name, admissionNo, role, password };
+  const userData = { name, usn, role, password };
 
   if (role === 'student') {
     if (!semesterInput || !studentPhoneInput || !parentNameInput || !parentPhoneInput || !addressInput) {
@@ -132,21 +132,21 @@ async function signup() {
 
 // Corrected login function - redirects admin correctly
 async function login() {
-  const admissionNoInput = document.getElementById('login-id');
+  const usnInput = document.getElementById('login-usn');
   const roleSelect = document.getElementById('login-role');
   const passwordInput = document.getElementById('login-password');
 
-  if (!admissionNoInput || !roleSelect || !passwordInput) {
+  if (!usnInput || !roleSelect || !passwordInput) {
       showMessage("Login form elements missing. Please check HTML.", 'error');
       return;
   }
 
-  const admissionNo = admissionNoInput.value.trim();
+  const usn = usnInput.value.trim();
   const role = roleSelect.value;
   const password = passwordInput.value.trim();
 
-  if (!admissionNo || !password) {
-      return showMessage("User ID and Password are required.", 'error');
+  if (!usn || !password) {
+      return showMessage("USN and Password are required.", 'error');
   }
 
   try {
@@ -156,7 +156,7 @@ async function login() {
     const res = await fetch(`${baseUrl}/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ admissionNo, role, password }),
+      body: JSON.stringify({ usn, role, password }),
     });
     const data = await res.json();
     if (!res.ok) {

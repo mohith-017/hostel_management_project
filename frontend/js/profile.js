@@ -3,7 +3,7 @@ const token = localStorage.getItem('token');
 
 // Elements
 const profileName = document.getElementById('profile-name');
-const profileAdmissionNo = document.getElementById('profile-admissionNo');
+const profileUsn = document.getElementById('profile-usn');
 const studentPhoneInput = document.getElementById('profile-student-phone');
 const parentNameInput = document.getElementById('profile-parent-name');
 const parentPhoneInput = document.getElementById('profile-parent-phone');
@@ -48,7 +48,7 @@ async function fetchProfile() {
 
     // Populate the form
     profileName.textContent = data.name;
-    profileAdmissionNo.textContent = data.admissionNo;
+    profileUsn.textContent = data.usn;
     studentPhoneInput.value = data.studentPhone || '';
     parentNameInput.value = data.parentName || '';
     parentPhoneInput.value = data.parentPhone || '';

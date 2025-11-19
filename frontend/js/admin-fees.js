@@ -55,7 +55,7 @@ async function fetchFees() {
       const row = tableBody.insertRow();
       row.innerHTML = `
         <td>${f.student?.name || 'N/A'}</td>
-        <td>${f.student?.admissionNo || 'N/A'}</td>
+        <td>${f.student?.usn || 'N/A'}</td>
         <td>${f.student?.semester || 'N/A'}</td>
         <td>${f.student?.studentPhone || 'N/A'}</td>
         <td>₹${f.amount}</td>

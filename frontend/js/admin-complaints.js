@@ -74,7 +74,7 @@ async function fetchComplaints() {
 
       row.innerHTML = `
         <td>${c.student?.name || 'N/A'}</td>
-        <td>${c.student?.admissionNo || 'N/A'}</td>
+        <td>${c.student?.usn || 'N/A'}</td>
         <td>${c.category}</td>
         <td>${c.description}</td>
         <td>

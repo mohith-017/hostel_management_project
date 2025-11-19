@@ -57,7 +57,7 @@ async function loadReceiptData() {
       
       // Populate the HTML preview
       document.getElementById('receipt-name').textContent = profileData.name;
-      document.getElementById('receipt-id').textContent = profileData.admissionNo;
+      document.getElementById('receipt-usn').textContent = profileData.usn;
       document.getElementById('receipt-date').textContent = new Date(feeData.paymentDate).toLocaleDateString();
       document.getElementById('receipt-amount').textContent = `Rs. ${feeData.amount}`;
 
@@ -75,7 +75,7 @@ async function loadReceiptData() {
           const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
           
           doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-          doc.save(`Hostel_Fee_Receipt_${profileData.admissionNo}.pdf`);
+          doc.save(`Hostel_Fee_Receipt_${profileData.usn}.pdf`);
         });
       });
 
